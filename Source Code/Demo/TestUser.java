@@ -1,9 +1,13 @@
 package Demo;
 
-public class TestUser {
-    public String name;
+import annotations.Min;
 
-    private Integer age;
+public class TestUser {
+    @Min(value = "5")
+    private String name = "12";
+
+    @Min(value = "5")
+    public Integer age = 13;
 
     public String getName() {
         return name;
