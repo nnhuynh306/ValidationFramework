@@ -11,6 +11,9 @@ public class ChainValidatorLinker<T>  {
     }
 
     public void add(Validator<T> validator) {
+        if (validator == null) {
+            return;
+        }
         if (firstValidator == null) {
             firstValidator = validator;
             lastValidator = validator;

@@ -11,13 +11,13 @@ import java.util.function.Function;
 
 public abstract class AbstractValidator<T> extends BaseValidator<T>  {
 
-    public ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
+    protected ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
 
     public AbstractValidator() {
     }
 
     @Override
-    public final boolean validate(T t, ValidationResults returnResults) {
+    public boolean validate(T t, ValidationResults returnResults) {
         Validator<T> firstValidator = chainValidatorLinker.getFirstValidator();
 
         if (firstValidator != null) {
