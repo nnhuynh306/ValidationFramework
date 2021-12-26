@@ -14,6 +14,13 @@ public class Main {
         user.setName("halo");
         ValidationResults results = new ValidationResults();
         System.out.println(test.validate(user, results));
-        System.out.println(new AnnotationValidator<TestUser>(new AnnotatedClassParserImpl<>()).validate(user, results));
+
+        CustomUser customUser = new CustomUser();
+
+        customUser.setTestUser(user);
+
+        ClassValidator classValidator = new ClassValidator();
+
+        System.out.println(classValidator.validate(customUser, results));
     }
 }

@@ -5,7 +5,9 @@ import validators.Validator;
 import validators.annotation.AnnotatedFieldValidator;
 import validators.annotation.AnnotationValidator;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 @SuppressWarnings("unchecked")
 public class ValidatorBuilderFactory {
@@ -29,6 +31,10 @@ public class ValidatorBuilderFactory {
 
     public static StringValidatorBuilder getStringValidatorBuilder() {
         return new StringValidatorBuilder();
+    }
+
+    public static <T> CustomValidatorBuilder<T> getCustomValidatorBuilder() {
+        return new CustomValidatorBuilder<T>();
     }
 
 }

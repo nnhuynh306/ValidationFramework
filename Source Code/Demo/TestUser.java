@@ -3,11 +3,9 @@ package Demo;
 import annotations.Min;
 
 public class TestUser {
-    @Min(value = "5")
     private String name = "12";
 
-    @Min(value = "5")
-    public Integer age = 13;
+    public Integer age = 1;
 
     public String getName() {
         return name;
@@ -20,4 +18,5 @@ public class TestUser {
     public Integer getAge() {
         return age;
     }
+
 }
