@@ -1,6 +1,7 @@
 package validators.builders;
 
 import util.comparator.Comparator;
+import validators.builtin.MaxValidator;
 import validators.builtin.MinValidator;
 import validators.builtin.NotNullValidator;
 
@@ -16,6 +17,11 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
 
     public NumericValidatorBuilder<T> min(T value, boolean included, boolean exitWhenFailed) {
         addValidatorToChain(new MinValidator<T, T>(exitWhenFailed, comparator, value, included));
+        return this;
+    }
+
+    public NumericValidatorBuilder<T> max(T value, boolean included, boolean exitWhenFailed) {
+        addValidatorToChain(new MaxValidator<>(exitWhenFailed, comparator, value, included));
         return this;
     }
 
