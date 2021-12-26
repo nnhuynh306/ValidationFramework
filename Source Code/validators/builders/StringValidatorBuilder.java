@@ -10,4 +10,13 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
         addValidatorToChain(new MinValidator<String, Integer>(true, new StringIntComparator(), value));
         return this;
     }
+    public StringValidatorBuilder notEmpty(int size){
+        return this;
+    }
+    public StringValidatorBuilder maxLength(int size){
+        return this;
+    }
+    public StringValidatorBuilder notNull(){
+        return this;
+    }
 }
