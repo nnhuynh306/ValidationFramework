@@ -2,25 +2,15 @@ package validators.builtin;
 
 import util.comparator.Comparator;
 
-public class EqualValidator <T,S> extends BuiltInValidator <T>{
-    private Comparator<T, S> comparator;
-
-    private boolean included = true;
+public class EqualValidator<T, S> extends BuiltInValidator<T> {
+    private final Comparator<T, S> comparator;
+    private final S value;
 
     public EqualValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value) {
         super(exitWhenFailed);
         this.comparator = comparator;
         this.value = value;
     }
-
-    public EqualValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value, boolean included) {
-        super(exitWhenFailed);
-        this.comparator = comparator;
-        this.value = value;
-        this.included = included;
-    }
-
-    private S value;
 
     @Override
     protected void createDefaultFailedMessage() {
@@ -29,13 +19,6 @@ public class EqualValidator <T,S> extends BuiltInValidator <T>{
 
     @Override
     public boolean isValid(T t) {
-        int compareValue = comparator.compare(t, value);
-        if (compareValue > 0) {
-            return false;
-        } else if (compareValue == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return comparator.compare(t, value) == 0;
     }
 }

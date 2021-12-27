@@ -7,32 +7,24 @@ import validators.result.ValidationResults;
 
 public abstract class BuiltInValidator<T> extends BaseValidator<T> {
 
-    private boolean exitWhenFailed;
-
+    private final boolean exitWhenFailed;
     protected String failedMessage;
-
     protected String name;
 
     public BuiltInValidator(boolean exitWhenFailed) {
         createDefaultFailedMessage();
         this.exitWhenFailed = exitWhenFailed;
     }
+
     @Override
     public final boolean validate(T t, ValidationResults returnResults) {
         boolean isValid = isValid(t);
 
-        if (hasNext()) {
-            if (isValid) {
-                return nextValidator.validate(t, returnResults);
-            } else {
-                if (!exitWhenFailed) {
-                    nextValidator.validate(t, returnResults);
-                }
-                return false;
-            }
-        } else {
-            return isValid;
-        }
+        if (!hasNext()) return isValid;
+
+        if (!isValid && exitWhenFailed) return false;
+
+        return nextValidator.validate(t, returnResults);
     }
 
     protected abstract void createDefaultFailedMessage();
@@ -44,9 +36,9 @@ public abstract class BuiltInValidator<T> extends BaseValidator<T> {
     }
 
     private ValidationResult createResult(boolean isValid) {
-       return new ValidationResult(isValid? ValidationResult.RESULT.OK: ValidationResult.RESULT.FAILED,
+        return new ValidationResult(isValid ? ValidationResult.RESULT.OK : ValidationResult.RESULT.FAILED,
                 name,
-                isValid?failedMessage: "");
+                isValid ? failedMessage : "");
     }
 
 

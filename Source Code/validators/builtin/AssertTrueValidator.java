@@ -12,6 +12,6 @@ public class AssertTrueValidator<T> extends BuiltInValidator<T> {
 
     @Override
     public boolean isValid(T t) {
-        return false;
+        return true;
     }
 }
