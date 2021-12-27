@@ -2,9 +2,9 @@ package validators.builtin;
 
 import util.comparator.Comparator;
 
-public class MaxValidator <T,S> extends BuiltInValidator<T>{
-    private Comparator<T, S> comparator;
-
+public class MaxValidator<T, S> extends BuiltInValidator<T> {
+    private final Comparator<T, S> comparator;
+    private final S value;
     private boolean included = true;
 
     public MaxValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value) {
@@ -20,7 +20,6 @@ public class MaxValidator <T,S> extends BuiltInValidator<T>{
         this.included = included;
     }
 
-    private S value;
 
     @Override
     protected void createDefaultFailedMessage() {

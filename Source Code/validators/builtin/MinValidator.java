@@ -3,9 +3,8 @@ package validators.builtin;
 import util.comparator.Comparator;
 
 public class MinValidator<T, S> extends BuiltInValidator<T> {
-
-    private Comparator<T, S> comparator;
-
+    private final Comparator<T, S> comparator;
+    private final S value;
     private boolean included = true;
 
     public MinValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value) {
@@ -20,8 +19,6 @@ public class MinValidator<T, S> extends BuiltInValidator<T> {
         this.value = value;
         this.included = included;
     }
-
-    private S value;
 
     @Override
     protected void createDefaultFailedMessage() {
