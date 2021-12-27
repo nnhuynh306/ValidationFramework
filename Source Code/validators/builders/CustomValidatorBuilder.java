@@ -1,9 +1,15 @@
 package validators.builders;
 
+import annotations.Min;
+import annotations.NotNull;
+import annotations.ValidatedBy;
+import util.ClassUtils;
 import validators.Validator;
 import validators.builtin.NotNullValidator;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
@@ -21,22 +27,29 @@ public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
     }
 
     public <V extends Validator<T>> CustomValidatorBuilder<T> validatedBy(Class<V> validatorClass, Object[] arguments) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
-        Constructor<V> validatorClassConstructor;
-        Validator<T> validator;
-        if (arguments != null && arguments.length > 0) {
-            Class<?>[] argClasses = new Class[arguments.length];
-
-            for (int i = 0; i < argClasses.length; i++) {
-                argClasses[i] = arguments[i].getClass();
-            }
-
-            validatorClassConstructor = validatorClass.getConstructor(argClasses);
-            validator = validatorClassConstructor.newInstance(arguments);
-        } else {
-            validatorClassConstructor = validatorClass.getConstructor();
-            validator = validatorClassConstructor.newInstance();
-        }
-        addValidatorToChain(validator);
+        addCustomValidator(validatorClass, arguments);
         return this;
+    }
+
+    @Override
+    public void processAnnotatedField(Field field) {
+        for (Annotation annotation: field.getAnnotations()) {
+            processAnnotation(annotation);
+        }
+    }
+
+    private void processAnnotation(Annotation annotation) {
+        try {
+            Class<?> annotationClass = annotation.annotationType();
+            if (annotationClass == NotNull.class) {
+                notNull();
+            } else {
+                ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
+                Class<? extends Validator<T>> validatorClass = (Class<? extends Validator<T>>) validatedBy.validatorClass();
+                validatedBy(validatorClass);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
