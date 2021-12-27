@@ -9,12 +9,13 @@ import java.util.function.Function;
 
 /**
  * A Validator (Rule) for type T but just for validate 1 of its field (Type S)
+ *
  * @param <T> type of Object
  * @param <S> type of Object's field to be validated
  */
 public class Rule<T, S> extends BaseValidator<T> {
-    private ValidatorBuilder<S> builder;
-    private Function<T, S> getSValueFunction;
+    private final ValidatorBuilder<S> builder;
+    private final Function<T, S> getSValueFunction;
     private Validator<S> validator;
 
     public Rule(ValidatorBuilder<S> builder, Function<T, S> getSValueFunction) {
@@ -22,15 +23,12 @@ public class Rule<T, S> extends BaseValidator<T> {
         this.getSValueFunction = getSValueFunction;
     }
 
-    public boolean validate(T t,ValidationResults returnResults) {
+    public boolean validate(T t, ValidationResults returnResults) {
         return getValidator().validate(getSValueFunction.apply(t), returnResults);
     }
 
     public Validator<S> getValidator() {
-        if (validator == null) {
-            return validator = builder.build();
-        } else {
-            return validator;
-        }
+        if (validator == null) return validator = builder.build();
+        return validator;
     }
 }

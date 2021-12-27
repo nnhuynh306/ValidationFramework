@@ -12,6 +12,7 @@ public class NotEmptyValidator<T, S> extends BuiltInValidator<T> {
 
     @Override
     public boolean isValid(T t) {
+        if (t instanceof String) return ((String) t).length() > 0;
         return false;
     }
 }
