@@ -29,13 +29,6 @@ public class EqualValidator <T,S> extends BuiltInValidator <T>{
 
     @Override
     public boolean isValid(T t) {
-        int compareValue = comparator.compare(t, value);
-        if (compareValue > 0) {
-            return false;
-        } else if (compareValue == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return comparator.compare(t, value) == 0;
     }
 }
