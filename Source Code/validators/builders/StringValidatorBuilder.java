@@ -25,7 +25,7 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
     }
 
     public StringValidatorBuilder regex(String regexStr) {
-        addValidatorToChain(new RegexValidator(true, regexStr));
+        addValidatorToChain(new RegexValidator<String>(true, regexStr));
         return this;
     }
 }
