@@ -1,11 +1,6 @@
 package validators.builders;
 
 import util.comparator.*;
-import validators.Validator;
-import validators.annotation.AnnotatedFieldValidator;
-import validators.annotation.AnnotationValidator;
-
-import java.lang.reflect.Field;
 
 @SuppressWarnings("unchecked")
 public class ValidatorBuilderFactory {
@@ -29,6 +24,26 @@ public class ValidatorBuilderFactory {
 
     public static StringValidatorBuilder getStringValidatorBuilder() {
         return new StringValidatorBuilder();
+    }
+
+    public static <T> CustomValidatorBuilder<T> getCustomValidatorBuilder() {
+        return new CustomValidatorBuilder<T>();
+    }
+
+    public static <T> ValidatorBuilder<T> getValidatorBuilderBy(Class<T> tClass) {
+        ValidatorBuilder<T> validatorBuilder;
+
+        if (tClass == null) {
+            validatorBuilder = getCustomValidatorBuilder();
+        } else if (tClass == String.class) {
+            validatorBuilder = (ValidatorBuilder<T>) getStringValidatorBuilder();
+        } else {
+            validatorBuilder = getNumericBuilderOf(tClass);
+            if (validatorBuilder == null) {
+                validatorBuilder = getCustomValidatorBuilder();
+            }
+        }
+        return validatorBuilder;
     }
 
 }

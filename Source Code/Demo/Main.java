@@ -1,10 +1,6 @@
 package Demo;
 
 import validators.annotation.AnnotationValidator;
-import validators.annotation.parser.AnnotatedClassParserImpl;
-import validators.annotation.parser.FieldValueParserImpl;
-import validators.BaseValidator;
-import validators.annotation.AnnotatedFieldValidator;
 import validators.result.ValidationResults;
 
 public class Main {
@@ -14,6 +10,16 @@ public class Main {
         user.setName("1234");
         ValidationResults results = new ValidationResults();
         System.out.println(test.validate(user, results));
-        System.out.println(new AnnotationValidator<TestUser>(new AnnotatedClassParserImpl<>()).validate(user, results));
+
+        CustomUser customUser = new CustomUser();
+
+        customUser.setTestUser(user);
+
+        ClassValidator classValidator = new ClassValidator();
+
+        System.out.println(classValidator.validate(customUser, results));
+
+        System.out.println(new AnnotationValidator<>().validate(customUser, results));
     }
+
 }

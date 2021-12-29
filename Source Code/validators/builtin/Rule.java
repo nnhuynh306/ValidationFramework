@@ -23,8 +23,12 @@ public class Rule<T, S> extends BaseValidator<T> {
         this.getSValueFunction = getSValueFunction;
     }
 
-    public boolean validate(T t, ValidationResults returnResults) {
-        return getValidator().validate(getSValueFunction.apply(t), returnResults);
+    public boolean validate(T t,ValidationResults returnResults) {
+        if (hasNext()) {
+            return getValidator().validate(getSValueFunction.apply(t), returnResults) && nextValidator.validate(t, returnResults);
+        } else {
+            return getValidator().validate(getSValueFunction.apply(t), returnResults);
+        }
     }
 
     public Validator<S> getValidator() {

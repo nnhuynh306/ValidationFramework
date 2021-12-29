@@ -1,20 +1,19 @@
 package validators.annotation;
 
 import util.ChainValidatorLinker;
-import validators.Validator;
-import validators.annotation.parser.AnnotatedClassParser;
 import validators.BaseValidator;
-import validators.annotation.parser.AnnotatedClassParserImpl;
+import validators.Validator;
+import validators.builders.ValidatorBuilder;
+import validators.builders.ValidatorBuilderFactory;
 import validators.result.ValidationResults;
+
+import java.lang.reflect.Field;
 
 public class AnnotationValidator<T> extends BaseValidator<T> {
 
-    private AnnotatedClassParser<T> parser;
+     ChainValidatorLinker<T> chainValidatorLinker;
 
-    ChainValidatorLinker<T> chainValidatorLinker;
-
-    public AnnotationValidator(AnnotatedClassParser<T> parser) {
-        this.parser = parser;
+    public AnnotationValidator() {
     }
 
 
@@ -23,6 +22,7 @@ public class AnnotationValidator<T> extends BaseValidator<T> {
         if (chainValidatorLinker == null) {
             addRulesFrom(t);
         }
+
         try {
             return chainValidatorLinker.getFirstValidator().validate(t, returnResults);
         } catch (NullPointerException e) {
@@ -33,7 +33,10 @@ public class AnnotationValidator<T> extends BaseValidator<T> {
 
 
     private void addRulesFrom(T t) {
-         chainValidatorLinker = parser.parse(t);
+        chainValidatorLinker = new ChainValidatorLinker<>();
+        for (Field field: t.getClass().getDeclaredFields()) {
+            chainValidatorLinker.add(new AnnotatedFieldValidator<>(field, field.getType()));
+        }
     }
 
 }
