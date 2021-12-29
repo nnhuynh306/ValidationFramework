@@ -1,7 +1,6 @@
 package validators.builtin;
 
 import validators.BaseValidator;
-import validators.Validator;
 import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 

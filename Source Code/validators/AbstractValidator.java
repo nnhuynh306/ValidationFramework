@@ -1,12 +1,14 @@
 package validators;
 
+import util.ChainValidatorLinker;
+import validators.builders.DateValidatorBuilder;
 import validators.builders.NumericValidatorBuilder;
 import validators.builders.StringValidatorBuilder;
 import validators.builders.ValidatorBuilderFactory;
-import util.ChainValidatorLinker;
 import validators.builtin.Rule;
 import validators.result.ValidationResults;
 
+import java.util.Date;
 import java.util.function.Function;
 
 public abstract class AbstractValidator<T> extends BaseValidator<T>  {
@@ -40,5 +42,11 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
                 =  ValidatorBuilderFactory.getNumericBuilderOf(Integer.class);
         chainValidatorLinker.add(new Rule<T, Integer>(integerValidatorBuilder, getIntegerFunction));
         return integerValidatorBuilder;
+    }
+
+    public final DateValidatorBuilder AddDateRuleFor(Function<T, Date> getDateFunction){
+        DateValidatorBuilder dateValidatorBuilder = (DateValidatorBuilder) ValidatorBuilderFactory.getDateValidatorBuilder();
+        chainValidatorLinker.add(new Rule<T,Date>(dateValidatorBuilder,getDateFunction));
+        return dateValidatorBuilder;
     }
 }

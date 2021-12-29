@@ -1,10 +1,8 @@
 package validators.annotation;
 
 import util.ChainValidatorLinker;
-import validators.Validator;
-import validators.annotation.parser.AnnotatedClassParser;
 import validators.BaseValidator;
-import validators.annotation.parser.AnnotatedClassParserImpl;
+import validators.annotation.parser.AnnotatedClassParser;
 import validators.result.ValidationResults;
 
 public class AnnotationValidator<T> extends BaseValidator<T> {

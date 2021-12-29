@@ -1,8 +1,8 @@
 package validators.builtin;
 
-import validators.builders.ValidatorBuilder;
 import validators.BaseValidator;
 import validators.Validator;
+import validators.builders.ValidatorBuilder;
 import validators.result.ValidationResults;
 
 import java.util.function.Function;

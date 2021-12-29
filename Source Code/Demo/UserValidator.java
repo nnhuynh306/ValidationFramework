@@ -6,7 +6,7 @@ public class UserValidator extends AbstractValidator<TestUser> {
     public UserValidator() {
 //        AddStringRuleFor(TestUser::getName).min(4);
 //        AddIntegerRuleFor(TestUser::getAge).notNull(true).min(6, true, false);
-        AddStringRuleFor(TestUser::getName).regex("^[a-zA-Z]*$");
+        AddStringRuleFor(TestUser::getName).equal("Thai");
     }
 
 }

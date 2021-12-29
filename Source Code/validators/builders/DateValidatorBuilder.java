@@ -1,33 +1,37 @@
 package validators.builders;
 
-import util.comparator.Comparator;
-import validators.builtin.MaxValidator;
+import util.comparator.DateComparator;
+import validators.builtin.EqualValidator;
 import validators.builtin.MinValidator;
+import validators.builtin.NotEmptyValidator;
 import validators.builtin.NotNullValidator;
 
 import java.util.Date;
 
-public class DateValidatorBuilder<T> extends BaseValidatorBuilder<T>{
-    private Comparator<T, T> comparator;
+public class DateValidatorBuilder extends BaseValidatorBuilder<Date>{
 
-    private final Class<T> TClass;
-
-    protected DateValidatorBuilder(Comparator<T, T> comparator, Class<T> TClass) {
-        this.comparator = comparator;
-        this.TClass = TClass;
-    }
-
-    public DateValidatorBuilder<T> min(T value, boolean included, boolean exitWhenFailed) {
-        addValidatorToChain(new MinValidator<T, T>(exitWhenFailed, comparator, value, included));
+    public DateValidatorBuilder minDate(Date min) {
+        addValidatorToChain(new MinValidator<>(true,new DateComparator(),min));
         return this;
     }
 
-    public DateValidatorBuilder<T> max(T value, boolean included,boolean exitWhenFailed) {
-        addValidatorToChain(new MaxValidator<T,T>(exitWhenFailed,comparator,value,included));
+    public DateValidatorBuilder notEmpty() {
+        addValidatorToChain(new NotEmptyValidator<>(true));
         return this;
     }
 
-    public Class<T> getTClass() {
-        return TClass;
+    public DateValidatorBuilder maxDate(Date max, boolean include) {
+        addValidatorToChain(new MinValidator<>(true,new DateComparator(),max,include));
+        return this;
+    }
+
+    public DateValidatorBuilder notNull() {
+        addValidatorToChain(new NotNullValidator<>(true));
+        return this;
+    }
+
+    public DateValidatorBuilder equal(Date value){
+        addValidatorToChain(new EqualValidator<>(true,new DateComparator(),value));
+        return this;
     }
 }
