@@ -15,6 +15,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@ValidatedBy(validatorClass = UserValidator.class)
+@ValidatedBy(validatorClass = ClassValidator.class)
 public @interface User {
 }

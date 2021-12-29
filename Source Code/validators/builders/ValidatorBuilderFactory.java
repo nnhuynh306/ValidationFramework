@@ -33,7 +33,9 @@ public class ValidatorBuilderFactory {
     public static <T> ValidatorBuilder<T> getValidatorBuilderBy(Class<T> tClass) {
         ValidatorBuilder<T> validatorBuilder;
 
-        if (tClass == String.class) {
+        if (tClass == null) {
+            validatorBuilder = getCustomValidatorBuilder();
+        } else if (tClass == String.class) {
             validatorBuilder = (ValidatorBuilder<T>) getStringValidatorBuilder();
         } else {
             validatorBuilder = getNumericBuilderOf(tClass);

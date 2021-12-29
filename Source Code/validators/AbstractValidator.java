@@ -33,7 +33,7 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
 
 
     public final StringValidatorBuilder AddStringRuleFor(Function<T, String> getStringFunction) {
-        StringValidatorBuilder stringValidatorBuilder = (StringValidatorBuilder) ValidatorBuilderFactory.getStringValidatorBuilder();
+        StringValidatorBuilder stringValidatorBuilder = ValidatorBuilderFactory.getStringValidatorBuilder();
         chainValidatorLinker.add(new Rule<T, String>(stringValidatorBuilder, getStringFunction));
         return stringValidatorBuilder;
     }
