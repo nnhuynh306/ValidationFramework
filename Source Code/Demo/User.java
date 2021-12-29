@@ -1,7 +1,8 @@
-package annotations;
+package Demo;
 
 import Demo.ClassValidator;
 import Demo.UserValidator;
+import annotations.ValidatedBy;
 import validators.AbstractValidator;
 import validators.BaseValidator;
 import validators.builtin.MinValidator;

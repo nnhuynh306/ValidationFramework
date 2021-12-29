@@ -1,8 +1,5 @@
 package Demo;
 
-import annotations.User;
-import annotations.ValidatedBy;
-
 public class CustomUser {
 
     @User
