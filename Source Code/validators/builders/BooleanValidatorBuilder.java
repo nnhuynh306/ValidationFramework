@@ -2,6 +2,8 @@ package validators.builders;
 
 import util.comparator.Comparator;
 
+import java.lang.reflect.Field;
+
 public class BooleanValidatorBuilder <T> extends BaseValidatorBuilder<T>{
     private Comparator<T, T> comparator;
 
@@ -21,5 +23,10 @@ public class BooleanValidatorBuilder <T> extends BaseValidatorBuilder<T>{
 
     public Class<T> getTClass() {
         return TClass;
+    }
+
+    @Override
+    public void processAnnotatedField(Field field) {
+
     }
 }

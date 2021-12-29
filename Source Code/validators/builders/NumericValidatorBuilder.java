@@ -53,7 +53,7 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
             Class<?> annotationClass = annotation.annotationType();
 
             if (annotationClass == Min.class) {
-                min((T) ClassUtils.parse(((Min) annotation).value(), tClass));
+
             } else {
 //                ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
 //                Class<?> validatorClass = validatedBy.validatorClass();

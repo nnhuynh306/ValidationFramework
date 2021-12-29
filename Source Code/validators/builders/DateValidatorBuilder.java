@@ -5,6 +5,7 @@ import validators.builtin.MaxValidator;
 import validators.builtin.MinValidator;
 import validators.builtin.NotNullValidator;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 
 public class DateValidatorBuilder<T> extends BaseValidatorBuilder<T>{
@@ -29,5 +30,10 @@ public class DateValidatorBuilder<T> extends BaseValidatorBuilder<T>{
 
     public Class<T> getTClass() {
         return TClass;
+    }
+
+    @Override
+    public void processAnnotatedField(Field field) {
+
     }
 }

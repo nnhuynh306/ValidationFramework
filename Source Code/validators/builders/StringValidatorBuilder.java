@@ -50,6 +50,7 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
     public StringValidatorBuilder notEmpty(int size) {
         return this;
