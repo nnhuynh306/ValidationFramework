@@ -28,6 +28,8 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
 
     public StringValidatorBuilder notEmpty() {
         addValidatorToChain(new NotEmptyValidator<>(true));
+        return this;
+    }
 
 
     public <V extends Validator<String>>StringValidatorBuilder validatedBy(Class<V> validatorClass) {
