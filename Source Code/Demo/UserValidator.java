@@ -7,8 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 public class UserValidator extends AbstractValidator<TestUser> {
     public UserValidator() {
 //        AddStringRuleFor(TestUser::getName).min(4);
-        AddIntegerRuleFor(TestUser::getAge).notNull(true).min(0, true, false);
-        AddStringRuleFor(TestUser::getName).minLength(1);
+//        AddIntegerRuleFor(TestUser::getAge).notNull(true).min(6, true, false);
+        AddStringRuleFor(TestUser::getName).regex("^[a-zA-Z]*$");
     }
 
 }

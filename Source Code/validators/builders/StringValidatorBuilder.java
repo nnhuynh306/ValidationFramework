@@ -6,6 +6,7 @@ import util.ClassUtils;
 import util.comparator.StringIntComparator;
 import validators.Validator;
 import validators.builtin.MinValidator;
+import validators.builtin.RegexValidator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -17,6 +18,7 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
         addValidatorToChain(new MinValidator<String, Integer>(true, new StringIntComparator(), value));
         return this;
     }
+
 
     public <V extends Validator<String>>StringValidatorBuilder validatedBy(Class<V> validatorClass) {
         validatedBy(validatorClass, null);
@@ -48,5 +50,22 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    public StringValidatorBuilder notEmpty(int size) {
+        return this;
+    }
+
+    public StringValidatorBuilder maxLength(int size) {
+        return this;
+    }
+
+    public StringValidatorBuilder notNull() {
+        return this;
+    }
+
+    public StringValidatorBuilder regex(String regexStr) {
+        addValidatorToChain(new RegexValidator<String>(true, regexStr));
+        return this;
+
     }
 }
