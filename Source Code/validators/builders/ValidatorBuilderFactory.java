@@ -1,6 +1,10 @@
 package validators.builders;
 
+
 import util.comparator.ComparatorFactory;
+
+import util.comparator.*;
+
 
 @SuppressWarnings("unchecked")
 public class ValidatorBuilderFactory {
@@ -26,5 +30,28 @@ public class ValidatorBuilderFactory {
         return new StringValidatorBuilder();
     }
 
+
     public static DateValidatorBuilder getDateValidatorBuilder(){return new DateValidatorBuilder(); }
+
+    public static <T> CustomValidatorBuilder<T> getCustomValidatorBuilder() {
+        return new CustomValidatorBuilder<T>();
+    }
+
+    public static <T> ValidatorBuilder<T> getValidatorBuilderBy(Class<T> tClass) {
+        ValidatorBuilder<T> validatorBuilder;
+
+        if (tClass == null) {
+            validatorBuilder = getCustomValidatorBuilder();
+        } else if (tClass == String.class) {
+            validatorBuilder = (ValidatorBuilder<T>) getStringValidatorBuilder();
+        } else {
+            validatorBuilder = getNumericBuilderOf(tClass);
+            if (validatorBuilder == null) {
+                validatorBuilder = getCustomValidatorBuilder();
+            }
+        }
+        return validatorBuilder;
+    }
+
+
 }

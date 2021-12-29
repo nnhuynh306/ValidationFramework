@@ -6,6 +6,7 @@ import validators.builtin.MinValidator;
 import validators.builtin.NotEmptyValidator;
 import validators.builtin.NotNullValidator;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 
 public class DateValidatorBuilder extends BaseValidatorBuilder<Date>{
@@ -33,5 +34,10 @@ public class DateValidatorBuilder extends BaseValidatorBuilder<Date>{
     public DateValidatorBuilder equal(Date value){
         addValidatorToChain(new EqualValidator<>(true,new DateComparator(),value));
         return this;
+    }
+
+    @Override
+    public void processAnnotatedField(Field field) {
+
     }
 }

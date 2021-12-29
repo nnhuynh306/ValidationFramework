@@ -1,7 +1,14 @@
 package validators.builders;
 
+import Demo.ClassValidator;
+import annotations.Min;
+import annotations.ValidatedBy;
+import util.ClassUtils;
 import util.comparator.Comparator;
 import validators.builtin.*;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 
 public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
     private Comparator<T, T> comparator;
@@ -24,7 +31,7 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
     }
 
     public NumericValidatorBuilder<T> notNull(boolean exitWhenFailed) {
-        addValidatorToChain(new NotNullValidator<T>(exitWhenFailed));
+        addNotNullValidator(exitWhenFailed);
         return this;
     }
 
@@ -40,5 +47,28 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
 
     public Class<T> getTClass() {
         return TClass;
+    }
+
+    @Override
+    public void processAnnotatedField(Field field) {
+        for (Annotation annotation: field.getAnnotations()) {
+            processAnnotation(annotation, field.getType());
+        }
+    }
+
+    private void processAnnotation(Annotation annotation, Class<?> tClass) {
+        try {
+            Class<?> annotationClass = annotation.annotationType();
+
+            if (annotationClass == Min.class) {
+
+            } else {
+//                ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
+//                Class<?> validatorClass = validatedBy.validatorClass();
+//                validatedBy(validatorClass);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
