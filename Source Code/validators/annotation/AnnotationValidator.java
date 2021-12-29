@@ -2,9 +2,13 @@ package validators.annotation;
 
 import util.ChainValidatorLinker;
 import validators.BaseValidator;
+
+import validators.annotation.parser.AnnotatedClassParser;
+
 import validators.Validator;
 import validators.builders.ValidatorBuilder;
 import validators.builders.ValidatorBuilderFactory;
+
 import validators.result.ValidationResults;
 
 import java.lang.reflect.Field;

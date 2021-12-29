@@ -1,11 +1,14 @@
 package validators.annotation;
 
-import validators.annotation.parser.FieldValueParser;
 import validators.BaseValidator;
 import validators.Validator;
+
+import validators.annotation.parser.FieldValueParser;
+
 import validators.annotation.parser.FieldValueParserImpl;
 import validators.builders.ValidatorBuilder;
 import validators.builders.ValidatorBuilderFactory;
+
 import validators.result.ValidationResults;
 
 import java.lang.reflect.Field;

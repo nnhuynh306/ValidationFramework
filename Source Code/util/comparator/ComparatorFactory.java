@@ -1,5 +1,7 @@
 package util.comparator;
 
+import java.util.Date;
+
 public class ComparatorFactory {
 
     public static Comparator getComparator(Class<?> clazz1, Class<?> clazz2) {
@@ -25,6 +27,10 @@ public class ComparatorFactory {
             return new FloatComparator();
         } else if (clazz == Double.class || clazz == double.class) {
             return new DoubleComparator();
+        } else if (clazz == String.class){
+            return new StringComparator();
+        } else if (clazz == Date.class){
+            return new DateComparator();
         }
         else {
             return  null;

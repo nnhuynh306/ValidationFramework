@@ -1,6 +1,8 @@
 package validators.builders;
 
 import util.comparator.Comparator;
+import validators.builtin.AssertFalseValidator;
+import validators.builtin.AssertTrueValidator;
 
 import java.lang.reflect.Field;
 
@@ -14,10 +16,12 @@ public class BooleanValidatorBuilder <T> extends BaseValidatorBuilder<T>{
     }
 
     public BooleanValidatorBuilder<T> assetTrue() {
+        addValidatorToChain(new AssertTrueValidator<>(true));
         return this;
     }
 
     public BooleanValidatorBuilder<T> assetFalse() {
+        addValidatorToChain(new AssertFalseValidator<>(true));
         return this;
     }
 

@@ -5,9 +5,7 @@ import annotations.Min;
 import annotations.ValidatedBy;
 import util.ClassUtils;
 import util.comparator.Comparator;
-import validators.builtin.MaxValidator;
-import validators.builtin.MinValidator;
-import validators.builtin.NotNullValidator;
+import validators.builtin.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -34,6 +32,16 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
 
     public NumericValidatorBuilder<T> notNull(boolean exitWhenFailed) {
         addNotNullValidator(exitWhenFailed);
+        return this;
+    }
+
+    public NumericValidatorBuilder<T> notEmpty() {
+        addValidatorToChain(new NotEmptyValidator<>(true));
+        return this;
+    }
+
+    public NumericValidatorBuilder<T> equal(T value){
+        addValidatorToChain(new EqualValidator<T, T>(true, comparator, value));
         return this;
     }
 
