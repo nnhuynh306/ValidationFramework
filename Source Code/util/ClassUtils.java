@@ -1,7 +1,5 @@
 package util;
 
-import java.util.Date;
-
 public class ClassUtils {
     public static Object parse(String value, Class<?> clazz) throws ClassCastException, NumberFormatException {
         if (clazz == Integer.class) {

@@ -1,8 +1,10 @@
 package Demo;
 
+import annotations.Nested;
+
 public class CustomUser {
 
-    @User
+    @Nested
     TestUser testUser;
 
     public void setTestUser(TestUser testUser) {

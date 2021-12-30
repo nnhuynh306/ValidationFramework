@@ -7,13 +7,23 @@ public class ValidationResult {
 
     public ValidationResult(RESULT result, String name, String message) {
         this.result = result;
-        this.name = name;
+        this.name = name == null?"": name;
+        this.message = message;
+    }
+
+    public ValidationResult(boolean result, String name, String message) {
+        this.result = result? RESULT.OK: RESULT.FAILED;
+        this.name = name == null?"": name;
         this.message = message;
     }
 
     public enum RESULT {
         OK,
         FAILED,
+    }
+
+    public boolean hasFailed() {
+        return result == RESULT.FAILED;
     }
 
     public RESULT getResult() {

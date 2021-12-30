@@ -6,8 +6,8 @@ public class NotEmptyValidator<T> extends BuiltInValidator<T> {
     }
 
     @Override
-    protected void createDefaultFailedMessage() {
-        failedMessage = "TEST FAILED";
+    protected String createDefaultFailedMessage() {
+        return "TEST FAILED";
     }
 
     @Override

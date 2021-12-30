@@ -11,4 +11,14 @@ public class UserValidator extends AbstractValidator<TestUser> {
         AddStringRuleFor(TestUser::getName).equal("Thai");
     }
 
+    @Override
+    public String createFailedMessage() {
+        return null;
+    }
+
+    @Override
+    public String createName() {
+        return null;
+    }
+
 }

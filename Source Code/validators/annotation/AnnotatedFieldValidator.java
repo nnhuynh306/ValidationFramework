@@ -9,10 +9,10 @@ import validators.annotation.parser.FieldValueParserImpl;
 import validators.builders.ValidatorBuilder;
 import validators.builders.ValidatorBuilderFactory;
 
+import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 import java.lang.reflect.Field;
-import java.util.logging.Logger;
 
 /**
  * Basically a validator for annotated field of class T
@@ -27,29 +27,42 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
     private ValidatorBuilder<S> validatorBuilder;
     private Class<S> sClass;
 
+    private String name;
+
     public AnnotatedFieldValidator(Field field, Class<S> sClass) {
         this.fieldValueParser = new FieldValueParserImpl<>();
         this.field = field;
         this.sClass = sClass;
         this.validatorBuilder = ValidatorBuilderFactory.getValidatorBuilderBy(sClass);
+        this.name = field.getName();
     }
 
     @Override
     public boolean validate(T t, ValidationResults returnResults) {
+        boolean result;
+        String message = "";
         try {
             S s = fieldValueParser.parseValue(field, t, sClass);
             if (hasNext()) {
-                return getValidator().validate(s, returnResults) && nextValidator.validate(t, returnResults);
+                result = getValidator().validate(s, returnResults) && nextValidator.validate(t, returnResults);
             } else {
-                return getValidator().validate(s, returnResults);
+                result = getValidator().validate(s, returnResults);
             }
+            message = name + " is invalid\n";
         } catch (NullPointerException e) {
             e.printStackTrace();
-            return true;
+            result = true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            result = false;
+            message = "Catch Exception " + e.toString();
         }
+
+        if (returnResults != null) {
+            returnResults.add(createResult(result, message));
+        }
+
+        return result;
     }
 
     private Validator<S> getValidator() {
@@ -60,5 +73,9 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
         return validator;
     }
 
-
+    private ValidationResult createResult(boolean result, String message) {
+        return new ValidationResult(result,
+                name,
+                result?"": message);
+    }
 }

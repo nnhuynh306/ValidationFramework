@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Min {
     String value();
+    boolean included() default true;
     String message() default "";
 }

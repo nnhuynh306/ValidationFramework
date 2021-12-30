@@ -1,14 +1,13 @@
 package validators.builders;
 
-import annotations.Min;
+import annotations.Nested;
 import annotations.NotNull;
 import annotations.ValidatedBy;
-import util.ClassUtils;
 import validators.Validator;
+import validators.annotation.AnnotationValidator;
 import validators.builtin.NotNullValidator;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
@@ -31,6 +30,10 @@ public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
         return this;
     }
 
+    public void nested() {
+        addValidatorToChain(new AnnotationValidator<>());
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
@@ -43,6 +46,8 @@ public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
             Class<?> annotationClass = annotation.annotationType();
             if (annotationClass == NotNull.class) {
                 notNull();
+            } else if (annotationClass == Nested.class) {
+                nested();
             } else {
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<T>> validatorClass = (Class<? extends Validator<T>>) validatedBy.validatorClass();

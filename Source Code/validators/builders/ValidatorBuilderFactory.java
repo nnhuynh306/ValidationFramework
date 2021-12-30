@@ -3,8 +3,6 @@ package validators.builders;
 
 import util.comparator.ComparatorFactory;
 
-import util.comparator.*;
-
 
 @SuppressWarnings("unchecked")
 public class ValidatorBuilderFactory {
