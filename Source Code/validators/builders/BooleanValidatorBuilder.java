@@ -25,6 +25,11 @@ public class BooleanValidatorBuilder <T> extends BaseValidatorBuilder<T>{
         return this;
     }
 
+    public BooleanValidatorBuilder<T> name(String name) {
+        addNameForLastValidator(name);
+        return this;
+    }
+
     public Class<T> getTClass() {
         return TClass;
     }

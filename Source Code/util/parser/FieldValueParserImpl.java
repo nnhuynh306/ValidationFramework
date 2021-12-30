@@ -1,4 +1,4 @@
-package validators.annotation.parser;
+package util.parser;
 
 import java.lang.reflect.Field;
 import java.util.Objects;

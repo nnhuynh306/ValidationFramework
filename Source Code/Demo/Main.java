@@ -1,25 +1,21 @@
 package Demo;
 
 import validators.annotation.AnnotationValidator;
+import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 public class Main {
     public static void main(String[] args) {
         UserValidator test = new UserValidator();
         TestUser user = new TestUser();
-        user.setName("#000000");
+        user.setName("#00");
         ValidationResults results = new ValidationResults();
         System.out.println(test.validate(user, results));
 
-        CustomUser customUser = new CustomUser();
+        ValidationResult validationResult = results.get("username length", true);
 
-        customUser.setTestUser(user);
 
-        ClassValidator classValidator = new ClassValidator();
-
-//        System.out.println(classValidator.validate(customUser, results));
-
-        System.out.println(new AnnotationValidator<>().validate(customUser, results));
+        System.out.println(validationResult.getMessage());
     }
 
 }

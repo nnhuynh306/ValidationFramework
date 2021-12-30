@@ -59,6 +59,11 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
         return this;
     }
 
+    public NumericValidatorBuilder<T> name(String name) {
+        addNameForLastValidator(name);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {

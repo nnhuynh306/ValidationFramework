@@ -1,6 +1,7 @@
 package validators.builders;
 
 import util.ChainValidatorLinker;
+import validators.BaseValidator;
 import validators.Validator;
 import validators.builtin.NotNullValidator;
 
@@ -24,9 +25,9 @@ public abstract class BaseValidatorBuilder<T> implements ValidatorBuilder<T> {
 
     public void addNameForLastValidator(String name) {
         try {
-            chainValidatorLinker.getLastValidator();
-        } catch (NullPointerException ignored) {
-
+            ((BaseValidator) chainValidatorLinker.getLastValidator()).setName(name);
+        } catch (NullPointerException | ClassCastException e) {
+            e.printStackTrace();
         }
     }
 
