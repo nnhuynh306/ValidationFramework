@@ -21,30 +21,19 @@ import java.lang.reflect.Field;
 
 public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
 
-    public StringValidatorBuilder minLength(int min) {
-        addValidatorToChain(new MinValidator<>(true, new StringIntComparator(), min));
-        return this;
-    }
-
     public StringValidatorBuilder minLength(int min, boolean included, String message) {
         MinValidator<String, Integer> minValidator;
         addValidatorToChain(minValidator = new MinValidator<>(true, new StringIntComparator(), min, included));
-        minValidator.setFailedMessage(message);
+        if (message != null && !message.isEmpty()) {
+            minValidator.setFailedMessage(message);
+        }
         return this;
     }
 
     public StringValidatorBuilder minLength(int min, boolean included) {
-        addValidatorToChain(new MinValidator<>(true, new StringIntComparator(), min, included));
+        minLength(min, included, null);
         return this;
     }
-
-    public StringValidatorBuilder minLength(int min, String message) {
-        MinValidator<String, Integer> minValidator;
-        addValidatorToChain(minValidator = new MinValidator<>(true, new StringIntComparator(), min));
-        minValidator.setFailedMessage(message);
-        return this;
-    }
-
 
     public StringValidatorBuilder notEmpty() {
         addValidatorToChain(new NotEmptyValidator<>(true));
@@ -67,20 +56,17 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
         return this;
     }
 
-    public StringValidatorBuilder maxLength(int max) {
-        addValidatorToChain(new MaxValidator<>(true,new StringIntComparator(),max));
-        return this;
-    }
-
     public StringValidatorBuilder maxLength(int max, boolean include) {
-        addValidatorToChain(new MaxValidator<>(true,new StringIntComparator(),max, include));
+        maxLength(max, include, null);
         return this;
     }
 
-    public StringValidatorBuilder maxLength(int max, String message) {
+    public StringValidatorBuilder maxLength(int max, boolean include, String message) {
         MaxValidator<String, Integer> maxValidator;
-        addValidatorToChain(maxValidator = new MaxValidator<>(true, new StringIntComparator(), max));
-        maxValidator.setFailedMessage(message);
+        addValidatorToChain(maxValidator = new MaxValidator<>(true, new StringIntComparator(), max, include));
+        if (message != null && !message.isEmpty()) {
+            maxValidator.setFailedMessage(message);
+        }
         return this;
     }
 
@@ -101,7 +87,7 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
     }
 
     public StringValidatorBuilder name(String name) {
-
+        addNameForLastValidator(name);
         return this;
 
     }
@@ -109,11 +95,11 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
-            processAnnotation(annotation);
+            processAnnotation(annotation, field.getName());
         }
     }
 
-    private void processAnnotation(Annotation annotation) {
+    private void processAnnotation(Annotation annotation, String name) {
         try {
             Class<?> annotationClass = annotation.annotationType();
 
@@ -124,22 +110,12 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
             } else if (annotationClass == Min.class) {
 
                 Min minAnnotation = (Min) annotation;
-                String message = minAnnotation.message();
-                if (message.isEmpty()) {
-                    minLength((Integer) ClassUtils.parse(minAnnotation.value(), Integer.class));
-                } else {
-                    minLength((Integer) ClassUtils.parse(minAnnotation.value(), Integer.class), message);
-                }
+                minLength((Integer) ClassUtils.parse(minAnnotation.value(), Integer.class), minAnnotation.included(), minAnnotation.message());
 
             } else if (annotationClass == Max.class) {
 
                 Max maxAnnotation = (Max) annotation;
-                String message = maxAnnotation.message();
-                if (message.isEmpty()) {
-                    maxLength((Integer) ClassUtils.parse(maxAnnotation.value(), Integer.class));
-                } else {
-                    maxLength((Integer) ClassUtils.parse(maxAnnotation.value(), Integer.class), message);
-                }
+                maxLength((Integer) ClassUtils.parse(maxAnnotation.value(), Integer.class), maxAnnotation.included(), maxAnnotation.message());
 
             } else {
 
@@ -149,6 +125,8 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
                 validatedBy(validatorClass);
 
             }
+
+            name(name);
         } catch (Exception e) {
             e.printStackTrace();
         }

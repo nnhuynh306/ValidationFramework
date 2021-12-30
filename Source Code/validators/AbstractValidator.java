@@ -9,7 +9,6 @@ import validators.builders.CustomValidatorBuilder;
 import validators.builders.NumericValidatorBuilder;
 import validators.builders.StringValidatorBuilder;
 import validators.builders.ValidatorBuilderFactory;
-import validators.builtin.Rule;
 import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
@@ -38,22 +37,11 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
             result = true;
         }
 
-        if (returnResults != null) {
-            returnResults.add(createResult(result));
-        }
+        addResult(result, returnResults);
 
         return result;
     }
 
-    public abstract String createFailedMessage();
-
-    public abstract String createName();
-
-    private ValidationResult createResult(boolean result) {
-        return new ValidationResult(result,
-                createName(),
-                result? "": createFailedMessage());
-    }
 
     public final StringValidatorBuilder AddStringRuleFor(Function<T, String> getStringFunction) {
         StringValidatorBuilder stringValidatorBuilder = ValidatorBuilderFactory.getStringValidatorBuilder();

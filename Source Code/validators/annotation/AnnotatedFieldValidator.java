@@ -3,9 +3,9 @@ package validators.annotation;
 import validators.BaseValidator;
 import validators.Validator;
 
-import validators.annotation.parser.FieldValueParser;
+import util.parser.FieldValueParser;
 
-import validators.annotation.parser.FieldValueParserImpl;
+import util.parser.FieldValueParserImpl;
 import validators.builders.ValidatorBuilder;
 import validators.builders.ValidatorBuilderFactory;
 
@@ -34,7 +34,7 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
         this.field = field;
         this.sClass = sClass;
         this.validatorBuilder = ValidatorBuilderFactory.getValidatorBuilderBy(sClass);
-        this.name = field.getName();
+        this.setName(field.getName());
     }
 
     @Override
@@ -58,9 +58,8 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
             message = "Catch Exception " + e.toString();
         }
 
-        if (returnResults != null) {
-            returnResults.add(createResult(result, message));
-        }
+        setFailedMessage(message);
+        addResult(result, returnResults);
 
         return result;
     }
@@ -71,11 +70,5 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
             validator = validatorBuilder.build();
         }
         return validator;
-    }
-
-    private ValidationResult createResult(boolean result, String message) {
-        return new ValidationResult(result,
-                name,
-                result?"": message);
     }
 }

@@ -36,6 +36,11 @@ public class DateValidatorBuilder extends BaseValidatorBuilder<Date>{
         return this;
     }
 
+    public DateValidatorBuilder name(String name) {
+        addNameForLastValidator(name);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
 

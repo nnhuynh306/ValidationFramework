@@ -13,7 +13,7 @@ public class ColorValidator extends BuiltInValidator<String> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return null;
     }
 
     @Override

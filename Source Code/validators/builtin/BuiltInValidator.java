@@ -9,16 +9,14 @@ public abstract class BuiltInValidator<T> extends BaseValidator<T> {
 
     public static boolean DEFAULT_EXIT_WHEN_FAILED = true;
     private final boolean exitWhenFailed;
-    private String failedMessage;
-    private String name;
+
+    private boolean customMessage = false;
 
     public BuiltInValidator(boolean exitWhenFailed) {
-        failedMessage = createDefaultFailedMessage();
         this.exitWhenFailed = exitWhenFailed;
     }
 
     public BuiltInValidator() {
-        failedMessage = createDefaultFailedMessage();
         this.exitWhenFailed = DEFAULT_EXIT_WHEN_FAILED;
     }
 
@@ -26,9 +24,12 @@ public abstract class BuiltInValidator<T> extends BaseValidator<T> {
     public final boolean validate(T t, ValidationResults returnResults) {
         boolean isValid = isValid(t);
 
-        if (returnResults != null) {
-            returnResults.add(createResult(isValid));
+        if (!customMessage) {
+            super.setFailedMessage(createDefaultFailedMessage());
         }
+        addResult(isValid, returnResults);
+
+        addResult(isValid, returnResults);
 
         if (!hasNext()) {
             return isValid;
@@ -41,25 +42,14 @@ public abstract class BuiltInValidator<T> extends BaseValidator<T> {
         return isValid && nextValidator.validate(t, returnResults);
     }
 
+    @Override
+    public void setFailedMessage(String message) {
+        super.setFailedMessage(message);
+        customMessage = true;
+    }
+
     protected abstract String createDefaultFailedMessage();
 
     public abstract boolean isValid(T t);
 
-    public void setFailedMessage(String failedMessage) {
-        this.failedMessage = failedMessage;
-    }
-
-    private ValidationResult createResult(boolean isValid) {
-        return new ValidationResult(isValid ? ValidationResult.RESULT.OK : ValidationResult.RESULT.FAILED,
-                getName(),
-                isValid ? failedMessage : "");
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -6,19 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class UserValidator extends AbstractValidator<TestUser> {
     public UserValidator() {
-//        AddStringRuleFor(TestUser::getName).min(4);
-//        AddIntegerRuleFor(TestUser::getAge).notNull(true).min(6, true, false);
-        AddStringRuleFor(TestUser::getName).equal("Thai");
-    }
-
-    @Override
-    public String createFailedMessage() {
-        return null;
-    }
-
-    @Override
-    public String createName() {
-        return null;
+        AddStringRuleFor(TestUser::getName).minLength(4, true, "Halo").name("username length");
     }
 
 }

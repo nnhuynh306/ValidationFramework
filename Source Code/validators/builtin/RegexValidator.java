@@ -10,7 +10,7 @@ public class RegexValidator<T> extends BuiltInValidator<T> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return null;
     }
 
     @Override

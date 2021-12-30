@@ -5,14 +5,8 @@ public class ValidationResult {
     private String name;
     private String message;
 
-    public ValidationResult(RESULT result, String name, String message) {
+    private ValidationResult(RESULT result, String name, String message) {
         this.result = result;
-        this.name = name == null?"": name;
-        this.message = message;
-    }
-
-    public ValidationResult(boolean result, String name, String message) {
-        this.result = result? RESULT.OK: RESULT.FAILED;
         this.name = name == null?"": name;
         this.message = message;
     }
@@ -36,5 +30,13 @@ public class ValidationResult {
 
     public String getMessage() {
         return message;
+    }
+
+    public static ValidationResult create(boolean result, String name, String message) {
+        return new ValidationResult(result? RESULT.OK: RESULT.FAILED, name, message);
+    }
+
+    public static ValidationResult create(RESULT result, String name, String message) {
+        return new ValidationResult(result, name, message);
     }
 }

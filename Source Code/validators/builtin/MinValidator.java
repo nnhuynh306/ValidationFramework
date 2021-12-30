@@ -22,7 +22,7 @@ public class MinValidator<T, S> extends BuiltInValidator<T> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return getName() + " min value must be " + value + " (" + (included?"included":"excluded") + ")";
     }
 
     @Override

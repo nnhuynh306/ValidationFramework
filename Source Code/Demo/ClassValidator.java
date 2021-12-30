@@ -13,13 +13,4 @@ public class ClassValidator extends AbstractValidator<CustomUser> {
         }
     }
 
-    @Override
-    public String createFailedMessage() {
-        return null;
-    }
-
-    @Override
-    public String createName() {
-        return null;
-    }
 }

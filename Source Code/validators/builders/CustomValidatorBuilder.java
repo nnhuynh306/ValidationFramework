@@ -34,6 +34,11 @@ public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
         addValidatorToChain(new AnnotationValidator<>());
     }
 
+    public CustomValidatorBuilder<T> name(String name) {
+        addNameForLastValidator(name);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
