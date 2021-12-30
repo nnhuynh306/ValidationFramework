@@ -7,8 +7,8 @@ public class NotNullValidator<T> extends BuiltInValidator<T> {
     }
 
     @Override
-    protected void createDefaultFailedMessage() {
-
+    protected String createDefaultFailedMessage() {
+        return "TEST FAILED";
     }
 
     @Override

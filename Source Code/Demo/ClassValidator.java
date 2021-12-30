@@ -12,4 +12,14 @@ public class ClassValidator extends AbstractValidator<CustomUser> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String createFailedMessage() {
+        return null;
+    }
+
+    @Override
+    public String createName() {
+        return null;
+    }
 }

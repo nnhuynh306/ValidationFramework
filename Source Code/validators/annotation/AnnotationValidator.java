@@ -3,19 +3,13 @@ package validators.annotation;
 import util.ChainValidatorLinker;
 import validators.BaseValidator;
 
-import validators.annotation.parser.AnnotatedClassParser;
-
-import validators.Validator;
-import validators.builders.ValidatorBuilder;
-import validators.builders.ValidatorBuilderFactory;
-
 import validators.result.ValidationResults;
 
 import java.lang.reflect.Field;
 
 public class AnnotationValidator<T> extends BaseValidator<T> {
 
-     ChainValidatorLinker<T> chainValidatorLinker;
+    ChainValidatorLinker<T> chainValidatorLinker;
 
     public AnnotationValidator() {
     }
@@ -42,5 +36,4 @@ public class AnnotationValidator<T> extends BaseValidator<T> {
             chainValidatorLinker.add(new AnnotatedFieldValidator<>(field, field.getType()));
         }
     }
-
 }

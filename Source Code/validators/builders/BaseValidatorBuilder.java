@@ -4,7 +4,6 @@ import util.ChainValidatorLinker;
 import validators.Validator;
 import validators.builtin.NotNullValidator;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
 public abstract class BaseValidatorBuilder<T> implements ValidatorBuilder<T> {
@@ -21,6 +20,14 @@ public abstract class BaseValidatorBuilder<T> implements ValidatorBuilder<T> {
 
     protected void addNotNullValidator(boolean exitWhenFailed) {
         addValidatorToChain(new NotNullValidator<T>(exitWhenFailed));
+    }
+
+    public void addNameForLastValidator(String name) {
+        try {
+            chainValidatorLinker.getLastValidator();
+        } catch (NullPointerException ignored) {
+
+        }
     }
 
     protected <V extends Validator<T>> void addCustomValidator(Class<V> validatorClass, Object[] arguments) {

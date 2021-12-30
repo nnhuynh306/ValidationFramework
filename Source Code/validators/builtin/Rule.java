@@ -3,6 +3,7 @@ package validators.builtin;
 import validators.BaseValidator;
 import validators.Validator;
 import validators.builders.ValidatorBuilder;
+import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 import java.util.function.Function;
@@ -17,6 +18,7 @@ public class Rule<T, S> extends BaseValidator<T> {
     private final ValidatorBuilder<S> builder;
     private final Function<T, S> getSValueFunction;
     private Validator<S> validator;
+    private String name;
 
     public Rule(ValidatorBuilder<S> builder, Function<T, S> getSValueFunction) {
         this.builder = builder;
@@ -24,15 +26,36 @@ public class Rule<T, S> extends BaseValidator<T> {
     }
 
     public boolean validate(T t,ValidationResults returnResults) {
+        boolean result;
         if (hasNext()) {
-            return getValidator().validate(getSValueFunction.apply(t), returnResults) && nextValidator.validate(t, returnResults);
+            result = getValidator().validate(getSValueFunction.apply(t), returnResults) && nextValidator.validate(t, returnResults);
         } else {
-            return getValidator().validate(getSValueFunction.apply(t), returnResults);
+            result = getValidator().validate(getSValueFunction.apply(t), returnResults);
         }
+
+        if (returnResults != null) {
+            returnResults.add(createResult(result));
+        }
+
+        return result;
     }
 
     public Validator<S> getValidator() {
         if (validator == null) return validator = builder.build();
         return validator;
+    }
+
+    private ValidationResult createResult(boolean result) {
+        return new ValidationResult(result,
+                getName(),
+                result?"": "Rule for " + getName() + " has failed");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

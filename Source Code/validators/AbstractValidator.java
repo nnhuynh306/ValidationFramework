@@ -10,13 +10,12 @@ import validators.builders.NumericValidatorBuilder;
 import validators.builders.StringValidatorBuilder;
 import validators.builders.ValidatorBuilderFactory;
 import validators.builtin.Rule;
+import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 
 import java.util.Date;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import java.util.function.Function;
 
@@ -31,14 +30,30 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
     public boolean validate(T t, ValidationResults returnResults) {
         Validator<T> firstValidator = chainValidatorLinker.getFirstValidator();
 
+        boolean result;
         if (firstValidator != null) {
-            return chainValidatorLinker.getFirstValidator().validate(t, returnResults);
+            result = chainValidatorLinker.getFirstValidator().validate(t, returnResults);
         }
         else {
-            return true;
+            result = true;
         }
+
+        if (returnResults != null) {
+            returnResults.add(createResult(result));
+        }
+
+        return result;
     }
 
+    public abstract String createFailedMessage();
+
+    public abstract String createName();
+
+    private ValidationResult createResult(boolean result) {
+        return new ValidationResult(result,
+                createName(),
+                result? "": createFailedMessage());
+    }
 
     public final StringValidatorBuilder AddStringRuleFor(Function<T, String> getStringFunction) {
         StringValidatorBuilder stringValidatorBuilder = ValidatorBuilderFactory.getStringValidatorBuilder();

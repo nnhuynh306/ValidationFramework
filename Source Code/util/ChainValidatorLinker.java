@@ -26,4 +26,8 @@ public class ChainValidatorLinker<T>  {
     public Validator<T> getFirstValidator() {
         return firstValidator;
     }
+
+    public Validator<T> getLastValidator() {
+        return lastValidator;
+    }
 }

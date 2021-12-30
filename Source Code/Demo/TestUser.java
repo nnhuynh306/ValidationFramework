@@ -4,10 +4,10 @@ import annotations.Min;
 
 public class TestUser {
 
-    @Min(value = "1")
+    @ColorValidation
     private String name = "12";
 
-    @Min(value = "0")
+    @Min(value = "1")
     public Integer age = 1;
 
     public String getName() {

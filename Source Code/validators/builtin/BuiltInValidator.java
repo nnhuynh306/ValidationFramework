@@ -1,32 +1,47 @@
 package validators.builtin;
 
+import annotations.NotNull;
 import validators.BaseValidator;
 import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 public abstract class BuiltInValidator<T> extends BaseValidator<T> {
 
+    public static boolean DEFAULT_EXIT_WHEN_FAILED = true;
     private final boolean exitWhenFailed;
-    protected String failedMessage;
-    protected String name;
+    private String failedMessage;
+    private String name;
 
     public BuiltInValidator(boolean exitWhenFailed) {
-        createDefaultFailedMessage();
+        failedMessage = createDefaultFailedMessage();
         this.exitWhenFailed = exitWhenFailed;
+    }
+
+    public BuiltInValidator() {
+        failedMessage = createDefaultFailedMessage();
+        this.exitWhenFailed = DEFAULT_EXIT_WHEN_FAILED;
     }
 
     @Override
     public final boolean validate(T t, ValidationResults returnResults) {
         boolean isValid = isValid(t);
 
-        if (!hasNext()) return isValid;
+        if (returnResults != null) {
+            returnResults.add(createResult(isValid));
+        }
 
-        if (!isValid && exitWhenFailed) return false;
+        if (!hasNext()) {
+            return isValid;
+        }
 
-        return nextValidator.validate(t, returnResults);
+        if (!isValid && exitWhenFailed) {
+            return false;
+        }
+
+        return isValid && nextValidator.validate(t, returnResults);
     }
 
-    protected abstract void createDefaultFailedMessage();
+    protected abstract String createDefaultFailedMessage();
 
     public abstract boolean isValid(T t);
 
@@ -36,9 +51,15 @@ public abstract class BuiltInValidator<T> extends BaseValidator<T> {
 
     private ValidationResult createResult(boolean isValid) {
         return new ValidationResult(isValid ? ValidationResult.RESULT.OK : ValidationResult.RESULT.FAILED,
-                name,
+                getName(),
                 isValid ? failedMessage : "");
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }

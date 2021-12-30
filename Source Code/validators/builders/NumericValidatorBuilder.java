@@ -1,10 +1,10 @@
 package validators.builders;
 
-import Demo.ClassValidator;
 import annotations.Min;
 import annotations.ValidatedBy;
 import util.ClassUtils;
 import util.comparator.Comparator;
+import validators.Validator;
 import validators.builtin.*;
 
 import java.lang.annotation.Annotation;
@@ -49,6 +49,16 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
         return TClass;
     }
 
+    public <V extends Validator<T>> NumericValidatorBuilder<T> validatedBy(Class<V> validatorClass) {
+        validatedBy(validatorClass, null);
+        return this;
+    }
+
+    public <V extends Validator<T>> NumericValidatorBuilder<T> validatedBy(Class<V> validatorClass, Object[] arguments) {
+        addCustomValidator(validatorClass, arguments);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
@@ -61,11 +71,17 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
             Class<?> annotationClass = annotation.annotationType();
 
             if (annotationClass == Min.class) {
+                Min minAnnotation = (Min) annotation;
+                String message = minAnnotation.message();
+                if (message.isEmpty()) {
+                    min((T) ClassUtils.parse(minAnnotation.value(), Integer.class), true, true);
+                } else {
 
+                }
             } else {
-//                ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
-//                Class<?> validatorClass = validatedBy.validatorClass();
-//                validatedBy(validatorClass);
+                ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
+                Class<? extends Validator<T>> validatorClass = (Class<? extends Validator<T>>) validatedBy.validatorClass();
+                validatedBy(validatorClass);
             }
         } catch (Exception e) {
             e.printStackTrace();
