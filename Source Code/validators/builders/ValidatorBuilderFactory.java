@@ -35,6 +35,10 @@ public class ValidatorBuilderFactory {
         return new CustomValidatorBuilder<T>();
     }
 
+    public static BooleanValidatorBuilder getBooleanValidatorBuilder() {
+        return new BooleanValidatorBuilder();
+    }
+
     public static <T> ValidatorBuilder<T> getValidatorBuilderBy(Class<T> tClass) {
         ValidatorBuilder<T> validatorBuilder;
 

@@ -2,13 +2,8 @@ package validators;
 
 
 import util.ChainValidatorLinker;
-import validators.builders.DateValidatorBuilder;
+import validators.builders.*;
 
-import validators.builders.CustomValidatorBuilder;
-
-import validators.builders.NumericValidatorBuilder;
-import validators.builders.StringValidatorBuilder;
-import validators.builders.ValidatorBuilderFactory;
 import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
@@ -49,17 +44,9 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
         return stringValidatorBuilder;
     }
 
-    public final NumericValidatorBuilder<Integer> AddIntegerRuleFor(Function<T, Integer> getIntegerFunction) {
-        NumericValidatorBuilder<Integer> integerValidatorBuilder
-                =  ValidatorBuilderFactory.getNumericBuilderOf(Integer.class);
-        chainValidatorLinker.add(new Rule<>(integerValidatorBuilder, getIntegerFunction));
-        return integerValidatorBuilder;
-    }
-
-
     public final DateValidatorBuilder AddDateRuleFor(Function<T, Date> getDateFunction){
-        DateValidatorBuilder dateValidatorBuilder = (DateValidatorBuilder) ValidatorBuilderFactory.getDateValidatorBuilder();
-        chainValidatorLinker.add(new Rule<T,Date>(dateValidatorBuilder,getDateFunction));
+        DateValidatorBuilder dateValidatorBuilder = ValidatorBuilderFactory.getDateValidatorBuilder();
+        chainValidatorLinker.add(new Rule<>(dateValidatorBuilder,getDateFunction));
         return dateValidatorBuilder;
     }
 
@@ -69,5 +56,15 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
         return customValidatorBuilder;
     }
 
+    public final<S> NumericValidatorBuilder<S> AddNumericRuleFor(Function<T, S> getFunction, Class<S> sClass) {
+        NumericValidatorBuilder<S> numericValidatorBuilder =  ValidatorBuilderFactory.getNumericBuilderOf(sClass);
+        chainValidatorLinker.add(new Rule<>(numericValidatorBuilder, getFunction));
+        return numericValidatorBuilder;
+    }
 
+    public final BooleanValidatorBuilder AddBooleanRuleFor(Function<T, Boolean> getFunction) {
+        BooleanValidatorBuilder booleanValidatorBuilder =  ValidatorBuilderFactory.getBooleanValidatorBuilder();
+        chainValidatorLinker.add(new Rule<>(booleanValidatorBuilder, getFunction));
+        return booleanValidatorBuilder;
+    }
 }

@@ -13,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
 
-    public CustomValidatorBuilder() {
+    protected CustomValidatorBuilder() {
     }
 
     public CustomValidatorBuilder<T> notNull() {

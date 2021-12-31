@@ -21,6 +21,10 @@ import java.lang.reflect.Field;
 
 public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
 
+    protected StringValidatorBuilder() {
+
+    }
+
     public StringValidatorBuilder minLength(int min, boolean included, String message) {
         MinValidator<String, Integer> minValidator;
         addValidatorToChain(minValidator = new MinValidator<>(true, new StringIntComparator(), min, included));

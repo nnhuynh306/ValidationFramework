@@ -11,6 +11,10 @@ import java.util.Date;
 
 public class DateValidatorBuilder extends BaseValidatorBuilder<Date>{
 
+    protected DateValidatorBuilder() {
+
+    }
+
     public DateValidatorBuilder minDate(Date min) {
         addValidatorToChain(new MinValidator<>(true,new DateComparator(),min));
         return this;

@@ -6,32 +6,24 @@ import validators.builtin.AssertTrueValidator;
 
 import java.lang.reflect.Field;
 
-public class BooleanValidatorBuilder <T> extends BaseValidatorBuilder<T>{
-    private Comparator<T, T> comparator;
+public class BooleanValidatorBuilder extends BaseValidatorBuilder<Boolean>{
+    protected BooleanValidatorBuilder() {
 
-    private final Class<T> TClass;
-
-    protected BooleanValidatorBuilder(Class<T> TClass) {
-        this.TClass = TClass;
     }
 
-    public BooleanValidatorBuilder<T> assetTrue() {
+    public BooleanValidatorBuilder assetTrue() {
         addValidatorToChain(new AssertTrueValidator<>(true));
         return this;
     }
 
-    public BooleanValidatorBuilder<T> assetFalse() {
+    public BooleanValidatorBuilder assetFalse() {
         addValidatorToChain(new AssertFalseValidator<>(true));
         return this;
     }
 
-    public BooleanValidatorBuilder<T> name(String name) {
+    public BooleanValidatorBuilder name(String name) {
         addNameForLastValidator(name);
         return this;
-    }
-
-    public Class<T> getTClass() {
-        return TClass;
     }
 
     @Override
