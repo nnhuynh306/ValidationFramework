@@ -29,8 +29,6 @@ public abstract class BuiltInValidator<T> extends BaseValidator<T> {
         }
         addResult(isValid, returnResults);
 
-        addResult(isValid, returnResults);
-
         if (!hasNext()) {
             return isValid;
         }
