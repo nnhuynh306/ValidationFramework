@@ -18,6 +18,8 @@ public class ChainValidatorBuilderFactory {
             return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Float.class), clazz);
         } else if (clazz == Double.class || clazz == double.class) {
             return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Double.class), clazz);
+        } else if (clazz == Byte.class || clazz == byte.class) {
+            return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Byte.class), clazz);
         }
         else {
             return  null;
@@ -27,7 +29,6 @@ public class ChainValidatorBuilderFactory {
     public static StringChainValidatorBuilder getStringChainValidatorBuilder() {
         return new StringChainValidatorBuilder();
     }
-
 
     public static DateChainValidatorBuilder getDateChainValidatorBuilder(){return new DateChainValidatorBuilder(); }
 
@@ -39,7 +40,7 @@ public class ChainValidatorBuilderFactory {
         return new BooleanChainValidatorBuilder();
     }
 
-    public static <T> ChainValidatorBuilder<T> getChainValidatorBuilderBy(Class<T> tClass) {
+    public static <T> ChainValidatorBuilder<T> getChainValidatorBuilderFor(Class<T> tClass) {
         ChainValidatorBuilder<T> chainValidatorBuilder;
 
         if (tClass == null) {

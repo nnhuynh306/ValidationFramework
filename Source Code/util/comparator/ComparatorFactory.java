@@ -27,6 +27,8 @@ public class ComparatorFactory {
             return new FloatComparator();
         } else if (clazz == Double.class || clazz == double.class) {
             return new DoubleComparator();
+        } else if (clazz == Byte.class || clazz == byte.class) {
+            return new ByteComparator();
         } else if (clazz == String.class){
             return new StringComparator();
         } else if (clazz == Date.class){

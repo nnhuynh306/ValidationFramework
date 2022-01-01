@@ -32,7 +32,7 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
         this.fieldValueParser = new FieldValueParserImpl<>();
         this.field = field;
         this.sClass = sClass;
-        this.chainValidatorBuilder = ChainValidatorBuilderFactory.getChainValidatorBuilderBy(sClass);
+        this.chainValidatorBuilder = ChainValidatorBuilderFactory.getChainValidatorBuilderFor(sClass);
         this.setName(field.getName());
     }
 
