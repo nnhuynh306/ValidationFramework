@@ -31,6 +31,14 @@ public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuil
         }
     }
 
+    public void setFailedMessageForLastValidator(String failedMessage) {
+        try {
+            ((BaseValidator) chainValidatorLinker.getLastValidator()).setFailedMessage(failedMessage);
+        } catch (NullPointerException | ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected <V extends Validator<T>> void addCustomValidator(Class<V> validatorClass, Object[] arguments) {
        try {
            Constructor<V> validatorClassConstructor;

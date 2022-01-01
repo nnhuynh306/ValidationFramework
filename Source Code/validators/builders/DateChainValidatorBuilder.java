@@ -45,6 +45,11 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
         return this;
     }
 
+    public DateChainValidatorBuilder withMessage(String message) {
+        setFailedMessageForLastValidator(message);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
 

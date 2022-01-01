@@ -96,6 +96,11 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     }
 
+    public StringChainValidatorBuilder withMessage(String message) {
+        setFailedMessageForLastValidator(message);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
