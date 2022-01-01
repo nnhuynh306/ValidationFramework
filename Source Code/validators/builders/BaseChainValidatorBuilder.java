@@ -7,7 +7,7 @@ import validators.builtin.NotNullValidator;
 
 import java.lang.reflect.Constructor;
 
-public abstract class BaseValidatorBuilder<T> implements ValidatorBuilder<T> {
+public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuilder<T> {
     private ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
 
     protected void addValidatorToChain(Validator<T> validator) {

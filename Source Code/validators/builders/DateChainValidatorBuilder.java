@@ -9,38 +9,38 @@ import validators.builtin.NotNullValidator;
 import java.lang.reflect.Field;
 import java.util.Date;
 
-public class DateValidatorBuilder extends BaseValidatorBuilder<Date>{
+public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
 
-    protected DateValidatorBuilder() {
+    protected DateChainValidatorBuilder() {
 
     }
 
-    public DateValidatorBuilder minDate(Date min) {
+    public DateChainValidatorBuilder minDate(Date min) {
         addValidatorToChain(new MinValidator<>(true,new DateComparator(),min));
         return this;
     }
 
-    public DateValidatorBuilder notEmpty() {
+    public DateChainValidatorBuilder notEmpty() {
         addValidatorToChain(new NotEmptyValidator<>(true));
         return this;
     }
 
-    public DateValidatorBuilder maxDate(Date max, boolean include) {
+    public DateChainValidatorBuilder maxDate(Date max, boolean include) {
         addValidatorToChain(new MinValidator<>(true,new DateComparator(),max,include));
         return this;
     }
 
-    public DateValidatorBuilder notNull() {
+    public DateChainValidatorBuilder notNull() {
         addValidatorToChain(new NotNullValidator<>(true));
         return this;
     }
 
-    public DateValidatorBuilder equal(Date value){
+    public DateChainValidatorBuilder equal(Date value){
         addValidatorToChain(new EqualValidator<>(true,new DateComparator(),value));
         return this;
     }
 
-    public DateValidatorBuilder name(String name) {
+    public DateChainValidatorBuilder name(String name) {
         addNameForLastValidator(name);
         return this;
     }

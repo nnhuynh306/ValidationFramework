@@ -4,7 +4,6 @@ package validators;
 import util.ChainValidatorLinker;
 import validators.builders.*;
 
-import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 
@@ -38,32 +37,37 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
     }
 
 
-    public final StringValidatorBuilder AddStringRuleFor(Function<T, String> getStringFunction) {
-        StringValidatorBuilder stringValidatorBuilder = ValidatorBuilderFactory.getStringValidatorBuilder();
+    public final StringChainValidatorBuilder AddStringRuleFor(Function<T, String> getStringFunction) {
+        StringChainValidatorBuilder stringValidatorBuilder = ChainValidatorBuilderFactory.getStringChainValidatorBuilder();
         chainValidatorLinker.add(new Rule<>(stringValidatorBuilder, getStringFunction));
         return stringValidatorBuilder;
     }
 
-    public final DateValidatorBuilder AddDateRuleFor(Function<T, Date> getDateFunction){
-        DateValidatorBuilder dateValidatorBuilder = ValidatorBuilderFactory.getDateValidatorBuilder();
+    public final DateChainValidatorBuilder AddDateRuleFor(Function<T, Date> getDateFunction){
+        DateChainValidatorBuilder dateValidatorBuilder = ChainValidatorBuilderFactory.getDateChainValidatorBuilder();
         chainValidatorLinker.add(new Rule<>(dateValidatorBuilder,getDateFunction));
         return dateValidatorBuilder;
     }
 
-    public final <S> CustomValidatorBuilder<S> AddCustomRuleFor(Function<T, S> getFunction) {
-        CustomValidatorBuilder<S> customValidatorBuilder = ValidatorBuilderFactory.getCustomValidatorBuilder();
+    public final <S> CustomChainValidatorBuilder<S> AddCustomRuleFor(Function<T, S> getFunction) {
+        CustomChainValidatorBuilder<S> customValidatorBuilder = ChainValidatorBuilderFactory.getCustomChainValidatorBuilder();
         chainValidatorLinker.add(new Rule<>(customValidatorBuilder, getFunction));
         return customValidatorBuilder;
     }
 
-    public final<S> NumericValidatorBuilder<S> AddNumericRuleFor(Function<T, S> getFunction, Class<S> sClass) {
-        NumericValidatorBuilder<S> numericValidatorBuilder =  ValidatorBuilderFactory.getNumericBuilderOf(sClass);
+    public final<S> NumericChainValidatorBuilder<S> AddNumericRuleFor(Function<T, S> getFunction, Class<S> sClass) throws IllegalArgumentException {
+        NumericChainValidatorBuilder<S> numericValidatorBuilder =  ChainValidatorBuilderFactory.getNumericChainValidatorBuilderOf(sClass);
+
+        if (numericValidatorBuilder == null) {
+            throw new IllegalArgumentException(sClass.getName() + " is not a supported numeric type");
+        }
+
         chainValidatorLinker.add(new Rule<>(numericValidatorBuilder, getFunction));
         return numericValidatorBuilder;
     }
 
-    public final BooleanValidatorBuilder AddBooleanRuleFor(Function<T, Boolean> getFunction) {
-        BooleanValidatorBuilder booleanValidatorBuilder =  ValidatorBuilderFactory.getBooleanValidatorBuilder();
+    public final BooleanChainValidatorBuilder AddBooleanRuleFor(Function<T, Boolean> getFunction) {
+        BooleanChainValidatorBuilder booleanValidatorBuilder =  ChainValidatorBuilderFactory.getBooleanChainValidatorBuilder();
         chainValidatorLinker.add(new Rule<>(booleanValidatorBuilder, getFunction));
         return booleanValidatorBuilder;
     }

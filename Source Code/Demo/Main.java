@@ -13,9 +13,6 @@ public class Main {
         System.out.println(test.validate(user, results));
 
         ValidationResult validationResult = results.get("username length", true);
-
-
-        System.out.println(validationResult.getMessage());
     }
 
 }

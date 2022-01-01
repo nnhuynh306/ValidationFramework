@@ -7,8 +7,7 @@ import java.util.Date;
 
 public class UserValidator extends AbstractValidator<TestUser> {
     public UserValidator() {
-        AddStringRuleFor(TestUser::getName).minLength(4, true, "Halo").name("username length");
-        AddNumericRuleFor(TestUser::getAge, int.class);
+        AddNumericRuleFor(TestUser::getAge, int.class).notNull(true);
     }
 
 }

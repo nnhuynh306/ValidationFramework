@@ -1,27 +1,26 @@
 package validators.builders;
 
-import util.comparator.Comparator;
 import validators.builtin.AssertFalseValidator;
 import validators.builtin.AssertTrueValidator;
 
 import java.lang.reflect.Field;
 
-public class BooleanValidatorBuilder extends BaseValidatorBuilder<Boolean>{
-    protected BooleanValidatorBuilder() {
+public class BooleanChainValidatorBuilder extends BaseChainValidatorBuilder<Boolean> {
+    protected BooleanChainValidatorBuilder() {
 
     }
 
-    public BooleanValidatorBuilder assetTrue() {
+    public BooleanChainValidatorBuilder assetTrue() {
         addValidatorToChain(new AssertTrueValidator<>(true));
         return this;
     }
 
-    public BooleanValidatorBuilder assetFalse() {
+    public BooleanChainValidatorBuilder assetFalse() {
         addValidatorToChain(new AssertFalseValidator<>(true));
         return this;
     }
 
-    public BooleanValidatorBuilder name(String name) {
+    public BooleanChainValidatorBuilder name(String name) {
         addNameForLastValidator(name);
         return this;
     }
