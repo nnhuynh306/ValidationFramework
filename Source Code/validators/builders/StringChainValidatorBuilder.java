@@ -19,9 +19,13 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 
-public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
+public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<String> {
 
-    public StringValidatorBuilder minLength(int min, boolean included, String message) {
+    protected StringChainValidatorBuilder() {
+
+    }
+
+    public StringChainValidatorBuilder minLength(int min, boolean included, String message) {
         MinValidator<String, Integer> minValidator;
         addValidatorToChain(minValidator = new MinValidator<>(true, new StringIntComparator(), min, included));
         if (message != null && !message.isEmpty()) {
@@ -30,38 +34,38 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
         return this;
     }
 
-    public StringValidatorBuilder minLength(int min, boolean included) {
+    public StringChainValidatorBuilder minLength(int min, boolean included) {
         minLength(min, included, null);
         return this;
     }
 
-    public StringValidatorBuilder notEmpty() {
+    public StringChainValidatorBuilder notEmpty() {
         addValidatorToChain(new NotEmptyValidator<>(true));
         return this;
     }
 
 
-    public <V extends Validator<String>>StringValidatorBuilder validatedBy(Class<V> validatorClass) {
+    public <V extends Validator<String>> StringChainValidatorBuilder validatedBy(Class<V> validatorClass) {
         validatedBy(validatorClass, null);
         return this;
     }
 
-    public <V extends Validator<String>>StringValidatorBuilder validatedBy(Class<V> validatorClass, Object[] arguments) {
+    public <V extends Validator<String>> StringChainValidatorBuilder validatedBy(Class<V> validatorClass, Object[] arguments) {
         addCustomValidator(validatorClass, arguments);
         return this;
     }
 
-    public StringValidatorBuilder notEmpty(int size) {
+    public StringChainValidatorBuilder notEmpty(int size) {
 
         return this;
     }
 
-    public StringValidatorBuilder maxLength(int max, boolean include) {
+    public StringChainValidatorBuilder maxLength(int max, boolean include) {
         maxLength(max, include, null);
         return this;
     }
 
-    public StringValidatorBuilder maxLength(int max, boolean include, String message) {
+    public StringChainValidatorBuilder maxLength(int max, boolean include, String message) {
         MaxValidator<String, Integer> maxValidator;
         addValidatorToChain(maxValidator = new MaxValidator<>(true, new StringIntComparator(), max, include));
         if (message != null && !message.isEmpty()) {
@@ -70,26 +74,31 @@ public class StringValidatorBuilder extends BaseValidatorBuilder<String> {
         return this;
     }
 
-    public StringValidatorBuilder notNull() {
+    public StringChainValidatorBuilder notNull() {
         addValidatorToChain(new NotNullValidator<>(true));
         return this;
     }
 
-    public StringValidatorBuilder equal(String value){
+    public StringChainValidatorBuilder equal(String value){
         addValidatorToChain(new EqualValidator<>(true, new StringComparator(), value));
         return this;
     }
 
-    public StringValidatorBuilder regex(String regexStr) {
+    public StringChainValidatorBuilder regex(String regexStr) {
         addValidatorToChain(new RegexValidator<>(true, regexStr));
         return this;
 
     }
 
-    public StringValidatorBuilder name(String name) {
+    public StringChainValidatorBuilder name(String name) {
         addNameForLastValidator(name);
         return this;
 
+    }
+
+    public StringChainValidatorBuilder withMessage(String message) {
+        setFailedMessageForLastValidator(message);
+        return this;
     }
 
     @Override

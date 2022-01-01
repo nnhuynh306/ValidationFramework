@@ -1,37 +1,33 @@
 package validators.builders;
 
-import util.comparator.Comparator;
 import validators.builtin.AssertFalseValidator;
 import validators.builtin.AssertTrueValidator;
 
 import java.lang.reflect.Field;
 
-public class BooleanValidatorBuilder <T> extends BaseValidatorBuilder<T>{
-    private Comparator<T, T> comparator;
+public class BooleanChainValidatorBuilder extends BaseChainValidatorBuilder<Boolean> {
+    protected BooleanChainValidatorBuilder() {
 
-    private final Class<T> TClass;
-
-    protected BooleanValidatorBuilder(Class<T> TClass) {
-        this.TClass = TClass;
     }
 
-    public BooleanValidatorBuilder<T> assetTrue() {
+    public BooleanChainValidatorBuilder assetTrue() {
         addValidatorToChain(new AssertTrueValidator<>(true));
         return this;
     }
 
-    public BooleanValidatorBuilder<T> assetFalse() {
+    public BooleanChainValidatorBuilder assetFalse() {
         addValidatorToChain(new AssertFalseValidator<>(true));
         return this;
     }
 
-    public BooleanValidatorBuilder<T> name(String name) {
+    public BooleanChainValidatorBuilder name(String name) {
         addNameForLastValidator(name);
         return this;
     }
 
-    public Class<T> getTClass() {
-        return TClass;
+    public BooleanChainValidatorBuilder withMessage(String message) {
+        setFailedMessageForLastValidator(message);
+        return this;
     }
 
     @Override

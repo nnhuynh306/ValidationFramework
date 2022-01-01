@@ -7,7 +7,7 @@ import validators.builtin.NotNullValidator;
 
 import java.lang.reflect.Constructor;
 
-public abstract class BaseValidatorBuilder<T> implements ValidatorBuilder<T> {
+public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuilder<T> {
     private ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
 
     protected void addValidatorToChain(Validator<T> validator) {
@@ -26,6 +26,14 @@ public abstract class BaseValidatorBuilder<T> implements ValidatorBuilder<T> {
     public void addNameForLastValidator(String name) {
         try {
             ((BaseValidator) chainValidatorLinker.getLastValidator()).setName(name);
+        } catch (NullPointerException | ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setFailedMessageForLastValidator(String failedMessage) {
+        try {
+            ((BaseValidator) chainValidatorLinker.getLastValidator()).setFailedMessage(failedMessage);
         } catch (NullPointerException | ClassCastException e) {
             e.printStackTrace();
         }

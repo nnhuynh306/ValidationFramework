@@ -11,21 +11,21 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
+public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T> {
 
-    public CustomValidatorBuilder() {
+    protected CustomChainValidatorBuilder() {
     }
 
-    public CustomValidatorBuilder<T> notNull() {
+    public CustomChainValidatorBuilder<T> notNull() {
         addValidatorToChain(new NotNullValidator<>(false));
         return this;
     }
 
-    public <V extends Validator<T>> CustomValidatorBuilder<T> validatedBy(Class<V> validatorClass) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
+    public <V extends Validator<T>> CustomChainValidatorBuilder<T> validatedBy(Class<V> validatorClass) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
         return validatedBy(validatorClass, null);
     }
 
-    public <V extends Validator<T>> CustomValidatorBuilder<T> validatedBy(Class<V> validatorClass, Object[] arguments) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
+    public <V extends Validator<T>> CustomChainValidatorBuilder<T> validatedBy(Class<V> validatorClass, Object[] arguments) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
         addCustomValidator(validatorClass, arguments);
         return this;
     }
@@ -34,8 +34,13 @@ public class CustomValidatorBuilder<T> extends BaseValidatorBuilder<T> {
         addValidatorToChain(new AnnotationValidator<>());
     }
 
-    public CustomValidatorBuilder<T> name(String name) {
+    public CustomChainValidatorBuilder<T> name(String name) {
         addNameForLastValidator(name);
+        return this;
+    }
+
+    public CustomChainValidatorBuilder<T> withMessage(String message) {
+        setFailedMessageForLastValidator(message);
         return this;
     }
 

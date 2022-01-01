@@ -10,37 +10,32 @@ import validators.builtin.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
+public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T> {
     private Comparator<T, T> comparator;
 
     private final Class<T> TClass;
 
-    protected NumericValidatorBuilder(Comparator<T, T> comparator, Class<T> TClass) {
+    protected NumericChainValidatorBuilder(Comparator<T, T> comparator, Class<T> TClass) {
         this.comparator = comparator;
         this.TClass = TClass;
     }
 
-    public NumericValidatorBuilder<T> min(T value, boolean included, boolean exitWhenFailed) {
+    public NumericChainValidatorBuilder<T> min(T value, boolean included, boolean exitWhenFailed) {
         addValidatorToChain(new MinValidator<T, T>(exitWhenFailed, comparator, value, included));
         return this;
     }
 
-    public NumericValidatorBuilder<T> max(T value, boolean included, boolean exitWhenFailed) {
+    public NumericChainValidatorBuilder<T> max(T value, boolean included, boolean exitWhenFailed) {
         addValidatorToChain(new MaxValidator<>(exitWhenFailed, comparator, value, included));
         return this;
     }
 
-    public NumericValidatorBuilder<T> notNull(boolean exitWhenFailed) {
+    public NumericChainValidatorBuilder<T> notNull(boolean exitWhenFailed) {
         addNotNullValidator(exitWhenFailed);
         return this;
     }
 
-    public NumericValidatorBuilder<T> notEmpty() {
-        addValidatorToChain(new NotEmptyValidator<>(true));
-        return this;
-    }
-
-    public NumericValidatorBuilder<T> equal(T value){
+    public NumericChainValidatorBuilder<T> equal(T value){
         addValidatorToChain(new EqualValidator<T, T>(true, comparator, value));
         return this;
     }
@@ -49,18 +44,23 @@ public class NumericValidatorBuilder<T> extends BaseValidatorBuilder<T> {
         return TClass;
     }
 
-    public <V extends Validator<T>> NumericValidatorBuilder<T> validatedBy(Class<V> validatorClass) {
+    public <V extends Validator<T>> NumericChainValidatorBuilder<T> validatedBy(Class<V> validatorClass) {
         validatedBy(validatorClass, null);
         return this;
     }
 
-    public <V extends Validator<T>> NumericValidatorBuilder<T> validatedBy(Class<V> validatorClass, Object[] arguments) {
+    public <V extends Validator<T>> NumericChainValidatorBuilder<T> validatedBy(Class<V> validatorClass, Object[] arguments) {
         addCustomValidator(validatorClass, arguments);
         return this;
     }
 
-    public NumericValidatorBuilder<T> name(String name) {
+    public NumericChainValidatorBuilder<T> name(String name) {
         addNameForLastValidator(name);
+        return this;
+    }
+
+    public NumericChainValidatorBuilder<T> withMessage(String message) {
+        setFailedMessageForLastValidator(message);
         return this;
     }
 

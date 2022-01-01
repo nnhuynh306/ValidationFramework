@@ -6,10 +6,9 @@ import validators.Validator;
 import util.parser.FieldValueParser;
 
 import util.parser.FieldValueParserImpl;
-import validators.builders.ValidatorBuilder;
-import validators.builders.ValidatorBuilderFactory;
+import validators.builders.ChainValidatorBuilder;
+import validators.builders.ChainValidatorBuilderFactory;
 
-import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 import java.lang.reflect.Field;
@@ -24,7 +23,7 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
     private FieldValueParser<T, S>  fieldValueParser;
     private Field field;
     private Validator<S> validator;
-    private ValidatorBuilder<S> validatorBuilder;
+    private ChainValidatorBuilder<S> chainValidatorBuilder;
     private Class<S> sClass;
 
     private String name;
@@ -33,7 +32,7 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
         this.fieldValueParser = new FieldValueParserImpl<>();
         this.field = field;
         this.sClass = sClass;
-        this.validatorBuilder = ValidatorBuilderFactory.getValidatorBuilderBy(sClass);
+        this.chainValidatorBuilder = ChainValidatorBuilderFactory.getChainValidatorBuilderBy(sClass);
         this.setName(field.getName());
     }
 
@@ -66,8 +65,8 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
 
     private Validator<S> getValidator() {
         if (validator == null) {
-            validatorBuilder.processAnnotatedField(field);
-            validator = validatorBuilder.build();
+            chainValidatorBuilder.processAnnotatedField(field);
+            validator = chainValidatorBuilder.build();
         }
         return validator;
     }

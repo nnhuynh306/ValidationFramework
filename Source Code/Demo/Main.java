@@ -12,8 +12,7 @@ public class Main {
         ValidationResults results = new ValidationResults();
         System.out.println(test.validate(user, results));
 
-        ValidationResult validationResult = results.get("username length", true);
-
+        ValidationResult validationResult = results.get("int test", true);
 
         System.out.println(validationResult.getMessage());
     }

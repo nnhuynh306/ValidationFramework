@@ -1,9 +1,6 @@
 package validators;
 
-import validators.BaseValidator;
-import validators.Validator;
-import validators.builders.ValidatorBuilder;
-import validators.result.ValidationResult;
+import validators.builders.ChainValidatorBuilder;
 import validators.result.ValidationResults;
 
 import java.util.function.Function;
@@ -15,11 +12,11 @@ import java.util.function.Function;
  * @param <S> type of Object's field to be validated
  */
 public class Rule<T, S> extends BaseValidator<T> {
-    private final ValidatorBuilder<S> builder;
+    private final ChainValidatorBuilder<S> builder;
     private final Function<T, S> getSValueFunction;
     private Validator<S> validator;
 
-    public Rule(ValidatorBuilder<S> builder, Function<T, S> getSValueFunction) {
+    public Rule(ChainValidatorBuilder<S> builder, Function<T, S> getSValueFunction) {
         this.builder = builder;
         this.getSValueFunction = getSValueFunction;
     }
