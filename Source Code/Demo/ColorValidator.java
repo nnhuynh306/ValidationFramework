@@ -1,9 +1,6 @@
 package Demo;
 
-import validators.AbstractValidator;
-import validators.BaseValidator;
 import validators.builtin.BuiltInValidator;
-import validators.result.ValidationResults;
 
 public class ColorValidator extends BuiltInValidator<String> {
 

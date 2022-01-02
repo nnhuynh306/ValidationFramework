@@ -2,7 +2,6 @@ package validators.annotation;
 
 import util.ChainValidatorLinker;
 import validators.BaseValidator;
-
 import validators.result.ValidationResults;
 
 import java.lang.reflect.Field;

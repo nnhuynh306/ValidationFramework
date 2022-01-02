@@ -2,18 +2,14 @@ package validators.builders;
 
 
 import annotations.Max;
-import annotations.NotNull;
-import util.comparator.StringComparator;
-import util.comparator.StringIntComparator;
-import validators.builtin.*;
-
 import annotations.Min;
+import annotations.NotNull;
 import annotations.ValidatedBy;
 import util.ClassUtils;
+import util.comparator.StringComparator;
+import util.comparator.StringIntComparator;
 import validators.Validator;
-import validators.builtin.MinValidator;
-import validators.builtin.RegexValidator;
-
+import validators.builtin.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -21,7 +17,7 @@ import java.lang.reflect.Field;
 
 public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<String> {
 
-    protected StringChainValidatorBuilder() {
+    public StringChainValidatorBuilder() {
 
     }
 
@@ -140,4 +136,6 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
             e.printStackTrace();
         }
     }
+
+
 }

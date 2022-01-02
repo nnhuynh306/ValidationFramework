@@ -1,8 +1,6 @@
 package validators.builtin;
 
-import annotations.NotNull;
 import validators.BaseValidator;
-import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 
 public abstract class BuiltInValidator<T> extends BaseValidator<T> {

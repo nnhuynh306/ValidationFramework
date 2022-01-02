@@ -2,8 +2,6 @@ package Demo;
 
 import validators.AbstractValidator;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class ClassValidator extends AbstractValidator<CustomUser> {
     public ClassValidator() {
         try {
