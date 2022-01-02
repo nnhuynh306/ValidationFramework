@@ -1,14 +1,11 @@
 package validators.builders;
 
 
-import annotations.Max;
-import annotations.NotNull;
+import annotations.*;
 import util.comparator.StringComparator;
 import util.comparator.StringIntComparator;
 import validators.builtin.*;
 
-import annotations.Min;
-import annotations.ValidatedBy;
 import util.ClassUtils;
 import validators.Validator;
 import validators.builtin.MinValidator;
@@ -32,7 +29,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     }
 
     public StringChainValidatorBuilder minLength(int min) {
-        return minLength(min, false);
+        return minLength(min,true);
     }
 
     public StringChainValidatorBuilder notEmpty() {
@@ -104,30 +101,30 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     private void processAnnotation(Annotation annotation, String name) {
         try {
             Class<?> annotationClass = annotation.annotationType();
-
             if (annotationClass == NotNull.class) {
-
                 notNull();
-
+            } else if(annotationClass == NotEmpty.class){
+                NotEmpty notEmptyAnnotation = (NotEmpty) annotation;
+                notEmpty().withMessage(notEmptyAnnotation.message());
             } else if (annotationClass == Min.class) {
-
                 Min minAnnotation = (Min) annotation;
                 minLength((Integer) ClassUtils.parse(minAnnotation.value(), Integer.class), minAnnotation.included()).withMessage(minAnnotation.message());
-
             } else if (annotationClass == Max.class) {
-
                 Max maxAnnotation = (Max) annotation;
                 maxLength((Integer) ClassUtils.parse(maxAnnotation.value(), Integer.class), maxAnnotation.included()).withMessage(maxAnnotation.message());
-
-            } else {
-
+            } else if (annotationClass == Regex.class){
+                Regex regexAnnotation = (Regex) annotation;
+                regex(regexAnnotation.value()).withMessage(regexAnnotation.message());
+            } else if (annotationClass == Equal.class){
+                Equal equalAnnotation = (Equal) annotation;
+                equal(equalAnnotation.value()).withMessage(equalAnnotation.message());
+            }
+            else {
                 //Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<String>> validatorClass = (Class<? extends Validator<String>>) validatedBy.validatorClass();
                 validatedBy(validatorClass);
-
             }
-
             name(name);
         } catch (Exception e) {
             e.printStackTrace();
