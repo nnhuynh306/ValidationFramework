@@ -12,7 +12,7 @@ public class RegexValidator<String> extends BuiltInValidator<String> {
     }
 
     @Override
-    protected String createDefaultFailedMessage() {
+    protected java.lang.String createDefaultFailedMessage() {
         return null;
     }
 
