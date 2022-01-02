@@ -5,7 +5,9 @@ import annotations.ValidatedBy;
 import util.ClassUtils;
 import util.comparator.Comparator;
 import validators.Validator;
-import validators.builtin.*;
+import validators.builtin.EqualValidator;
+import validators.builtin.MaxValidator;
+import validators.builtin.MinValidator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

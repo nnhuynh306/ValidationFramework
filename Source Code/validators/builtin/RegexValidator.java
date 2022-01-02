@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class RegexValidator<String> extends BuiltInValidator<String> {
     private final String regex;
 
-    public RegexValidator( String regex) {
+    public RegexValidator(String regex) {
         super();
         this.regex = regex;
     }

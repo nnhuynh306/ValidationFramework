@@ -1,6 +1,5 @@
 package Demo;
 
-import validators.annotation.AnnotationValidator;
 import validators.result.ValidationResult;
 import validators.result.ValidationResults;
 

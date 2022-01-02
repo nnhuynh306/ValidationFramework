@@ -3,13 +3,9 @@ package validators;
 
 import util.ChainValidatorLinker;
 import validators.builders.*;
-
 import validators.result.ValidationResults;
 
-
 import java.util.Date;
-
-
 import java.util.function.Function;
 
 public abstract class AbstractValidator<T> extends BaseValidator<T>  {

@@ -18,8 +18,17 @@ import java.lang.reflect.Field;
 
 public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<String> {
 
-    protected StringChainValidatorBuilder() {
+    public StringChainValidatorBuilder() {
 
+    }
+
+    public StringChainValidatorBuilder minLength(int min, boolean included, String message) {
+        MinValidator<String, Integer> minValidator;
+        addValidatorToChain(minValidator = new MinValidator<>(new StringIntComparator(), min, included));
+        if (message != null && !message.isEmpty()) {
+            minValidator.setFailedMessage(message);
+        }
+        return this;
     }
 
     public StringChainValidatorBuilder minLength(int min, boolean included) {
@@ -55,7 +64,8 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     }
 
     public StringChainValidatorBuilder maxLength(int max) {
-        return maxLength(max,false);
+        maxLength(max, false);
+        return this;
     }
 
     public StringChainValidatorBuilder maxLength(int max, boolean include) {
@@ -124,7 +134,9 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<String>> validatorClass = (Class<? extends Validator<String>>) validatedBy.validatorClass();
                 validatedBy(validatorClass);
+
             }
+
             name(name);
         } catch (Exception e) {
             e.printStackTrace();
