@@ -19,8 +19,8 @@ public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuil
         return chainValidatorLinker.getFirstValidator();
     }
 
-    protected void addNotNullValidator(boolean exitWhenFailed) {
-        addValidatorToChain(new NotNullValidator<T>(exitWhenFailed));
+    protected void addNotNullValidator() {
+        addValidatorToChain(new NotNullValidator<T>());
     }
 
     public void addNameForLastValidator(String name) {

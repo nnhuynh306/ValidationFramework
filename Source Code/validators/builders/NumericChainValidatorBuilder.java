@@ -20,23 +20,23 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
         this.TClass = TClass;
     }
 
-    public NumericChainValidatorBuilder<T> min(T value, boolean included, boolean exitWhenFailed) {
-        addValidatorToChain(new MinValidator<T, T>(exitWhenFailed, comparator, value, included));
+    public NumericChainValidatorBuilder<T> min(T value, boolean included) {
+        addValidatorToChain(new MinValidator<T, T>( comparator, value, included));
         return this;
     }
 
-    public NumericChainValidatorBuilder<T> max(T value, boolean included, boolean exitWhenFailed) {
-        addValidatorToChain(new MaxValidator<>(exitWhenFailed, comparator, value, included));
+    public NumericChainValidatorBuilder<T> max(T value, boolean included) {
+        addValidatorToChain(new MaxValidator<>( comparator, value, included));
         return this;
     }
 
     public NumericChainValidatorBuilder<T> notNull(boolean exitWhenFailed) {
-        addNotNullValidator(exitWhenFailed);
+        addNotNullValidator();
         return this;
     }
 
     public NumericChainValidatorBuilder<T> equal(T value){
-        addValidatorToChain(new EqualValidator<T, T>(true, comparator, value));
+        addValidatorToChain(new EqualValidator<T, T>( comparator, value));
         return this;
     }
 
@@ -79,7 +79,7 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
                 Min minAnnotation = (Min) annotation;
                 String message = minAnnotation.message();
                 if (message.isEmpty()) {
-                    min((T) ClassUtils.parse(minAnnotation.value(), Integer.class), true, true);
+                    min((T) ClassUtils.parse(minAnnotation.value(), Integer.class), true);
                 } else {
 
                 }

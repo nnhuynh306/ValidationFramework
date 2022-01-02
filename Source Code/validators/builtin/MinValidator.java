@@ -7,14 +7,14 @@ public class MinValidator<T, S> extends BuiltInValidator<T> {
     private final S value;
     private boolean included = true;
 
-    public MinValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value) {
-        super(exitWhenFailed);
+    public MinValidator(Comparator<T, S> comparator, S value) {
+        super();
         this.comparator = comparator;
         this.value = value;
     }
 
-    public MinValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value, boolean included) {
-        super(exitWhenFailed);
+    public MinValidator(Comparator<T, S> comparator, S value, boolean included) {
+        super();
         this.comparator = comparator;
         this.value = value;
         this.included = included;

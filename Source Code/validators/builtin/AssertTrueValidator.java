@@ -1,8 +1,8 @@
 package validators.builtin;
 
 public class AssertTrueValidator<Boolean> extends BuiltInValidator<Boolean> {
-    public AssertTrueValidator(boolean exitWhenFailed) {
-        super(exitWhenFailed);
+    public AssertTrueValidator() {
+        super();
     }
 
     @Override

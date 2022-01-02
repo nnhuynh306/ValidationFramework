@@ -2,8 +2,8 @@ package validators.builtin;
 
 public class NotNullValidator<T> extends BuiltInValidator<T> {
 
-    public NotNullValidator(boolean exitWhenFailed) {
-        super(exitWhenFailed);
+    public NotNullValidator() {
+        super();
     }
 
     @Override

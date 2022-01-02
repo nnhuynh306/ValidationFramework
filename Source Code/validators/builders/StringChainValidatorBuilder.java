@@ -27,7 +27,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     public StringChainValidatorBuilder minLength(int min, boolean included) {
         MinValidator<String, Integer> minValidator;
-        addValidatorToChain(minValidator = new MinValidator<>(true, new StringIntComparator(), min, included));
+        addValidatorToChain(minValidator = new MinValidator<>(new StringIntComparator(), min, included));
         return this;
     }
 
@@ -36,7 +36,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     }
 
     public StringChainValidatorBuilder notEmpty() {
-        addValidatorToChain(new NotEmptyValidator<>(true));
+        addValidatorToChain(new NotEmptyValidator<>());
         return this;
     }
 
@@ -53,7 +53,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     public StringChainValidatorBuilder notEmpty(int size) {
         NotEmptyValidator<String> notEmptyValidator;
-        addValidatorToChain(notEmptyValidator = new NotEmptyValidator<>(true));
+        addValidatorToChain(notEmptyValidator = new NotEmptyValidator<>());
         return this;
     }
 
@@ -63,22 +63,22 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     public StringChainValidatorBuilder maxLength(int max, boolean include) {
         MaxValidator<String, Integer> maxValidator;
-        addValidatorToChain(maxValidator = new MaxValidator<>(true, new StringIntComparator(), max, include));
+        addValidatorToChain(maxValidator = new MaxValidator<>( new StringIntComparator(), max, include));
         return this;
     }
 
     public StringChainValidatorBuilder notNull() {
-        addValidatorToChain(new NotNullValidator<>(true));
+        addValidatorToChain(new NotNullValidator<>());
         return this;
     }
 
     public StringChainValidatorBuilder equal(String value){
-        addValidatorToChain(new EqualValidator<>(true, new StringComparator(), value));
+        addValidatorToChain(new EqualValidator<>( new StringComparator(), value));
         return this;
     }
 
     public StringChainValidatorBuilder regex(String regexStr) {
-        addValidatorToChain(new RegexValidator<>(true, regexStr));
+        addValidatorToChain(new RegexValidator<>(regexStr));
         return this;
 
     }

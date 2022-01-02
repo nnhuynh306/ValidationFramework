@@ -11,12 +11,12 @@ public class BooleanChainValidatorBuilder extends BaseChainValidatorBuilder<Bool
     }
 
     public BooleanChainValidatorBuilder assetTrue() {
-        addValidatorToChain(new AssertTrueValidator<>(true));
+        addValidatorToChain(new AssertTrueValidator<>());
         return this;
     }
 
     public BooleanChainValidatorBuilder assetFalse() {
-        addValidatorToChain(new AssertFalseValidator<>(true));
+        addValidatorToChain(new AssertFalseValidator<>());
         return this;
     }
 
