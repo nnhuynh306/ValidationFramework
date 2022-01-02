@@ -7,7 +7,7 @@ public class AssertFalseValidator<Boolean> extends BuiltInValidator<Boolean> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return "Must be FAILED but TRUE now";
     }
 
     @Override

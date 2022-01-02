@@ -7,7 +7,7 @@ public class NotEmptyValidator<T> extends BuiltInValidator<T> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return null;
+        return getName() + " must be not empty";
     }
 
 

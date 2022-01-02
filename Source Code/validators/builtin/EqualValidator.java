@@ -14,7 +14,7 @@ public class EqualValidator<T, S> extends BuiltInValidator<T> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return getName() + "must equal " + value;
     }
 
     @Override

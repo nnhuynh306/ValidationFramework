@@ -22,7 +22,7 @@ public class  MaxValidator<T, S> extends BuiltInValidator<T> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return getName() + " max value must be " + value + " (" + (included?"included":"excluded") + ")";
     }
 
     @Override
