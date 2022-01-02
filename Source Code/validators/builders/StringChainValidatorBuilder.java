@@ -25,18 +25,14 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     }
 
-    public StringChainValidatorBuilder minLength(int min, boolean included, String message) {
+    public StringChainValidatorBuilder minLength(int min, boolean included) {
         MinValidator<String, Integer> minValidator;
         addValidatorToChain(minValidator = new MinValidator<>(true, new StringIntComparator(), min, included));
-        if (message != null && !message.isEmpty()) {
-            minValidator.setFailedMessage(message);
-        }
         return this;
     }
 
-    public StringChainValidatorBuilder minLength(int min, boolean included) {
-        minLength(min, included, null);
-        return this;
+    public StringChainValidatorBuilder minLength(int min) {
+        return minLength(min, false);
     }
 
     public StringChainValidatorBuilder notEmpty() {
@@ -56,21 +52,18 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     }
 
     public StringChainValidatorBuilder notEmpty(int size) {
-
+        NotEmptyValidator<String> notEmptyValidator;
+        addValidatorToChain(notEmptyValidator = new NotEmptyValidator<>(true));
         return this;
+    }
+
+    public StringChainValidatorBuilder maxLength(int max) {
+        return maxLength(max,false);
     }
 
     public StringChainValidatorBuilder maxLength(int max, boolean include) {
-        maxLength(max, include, null);
-        return this;
-    }
-
-    public StringChainValidatorBuilder maxLength(int max, boolean include, String message) {
         MaxValidator<String, Integer> maxValidator;
         addValidatorToChain(maxValidator = new MaxValidator<>(true, new StringIntComparator(), max, include));
-        if (message != null && !message.isEmpty()) {
-            maxValidator.setFailedMessage(message);
-        }
         return this;
     }
 
@@ -119,12 +112,12 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
             } else if (annotationClass == Min.class) {
 
                 Min minAnnotation = (Min) annotation;
-                minLength((Integer) ClassUtils.parse(minAnnotation.value(), Integer.class), minAnnotation.included(), minAnnotation.message());
+                minLength((Integer) ClassUtils.parse(minAnnotation.value(), Integer.class), minAnnotation.included()).withMessage(minAnnotation.message());
 
             } else if (annotationClass == Max.class) {
 
                 Max maxAnnotation = (Max) annotation;
-                maxLength((Integer) ClassUtils.parse(maxAnnotation.value(), Integer.class), maxAnnotation.included(), maxAnnotation.message());
+                maxLength((Integer) ClassUtils.parse(maxAnnotation.value(), Integer.class), maxAnnotation.included()).withMessage(maxAnnotation.message());
 
             } else {
 
