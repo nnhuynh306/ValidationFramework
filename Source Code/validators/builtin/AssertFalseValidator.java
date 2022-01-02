@@ -1,6 +1,6 @@
 package validators.builtin;
 
-public class AssertFalseValidator <T> extends BuiltInValidator<T>{
+public class AssertFalseValidator<Boolean> extends BuiltInValidator<Boolean> {
     public AssertFalseValidator(boolean exitWhenFailed) {
         super(exitWhenFailed);
     }
@@ -11,7 +11,7 @@ public class AssertFalseValidator <T> extends BuiltInValidator<T>{
     }
 
     @Override
-    public boolean isValid(T t) {
+    public boolean isValid(Boolean value) {
         return false;
     }
 }
