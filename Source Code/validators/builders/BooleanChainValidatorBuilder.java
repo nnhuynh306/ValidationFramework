@@ -25,11 +25,6 @@ public class BooleanChainValidatorBuilder extends BaseChainValidatorBuilder<Bool
         return this;
     }
 
-    public BooleanChainValidatorBuilder withMessage(String message) {
-        setFailedMessageForLastValidator(message);
-        return this;
-    }
-
     @Override
     public void processAnnotatedField(Field field) {
 

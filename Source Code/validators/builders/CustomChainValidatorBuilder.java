@@ -39,11 +39,6 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
         return this;
     }
 
-    public CustomChainValidatorBuilder<T> withMessage(String message) {
-        setFailedMessageForLastValidator(message);
-        return this;
-    }
-
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {

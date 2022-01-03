@@ -7,7 +7,6 @@ import validators.Validator;
 import validators.builtin.EqualValidator;
 import validators.builtin.MinValidator;
 import validators.builtin.NotEmptyValidator;
-import validators.builtin.NotNullValidator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -54,11 +53,6 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
 
     public DateChainValidatorBuilder name(String name) {
         addNameForLastValidator(name);
-        return this;
-    }
-
-    public DateChainValidatorBuilder withMessage(String message) {
-        setFailedMessageForLastValidator(message);
         return this;
     }
 
