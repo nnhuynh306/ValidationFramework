@@ -1,5 +1,6 @@
 package validators.builders;
 
+import annotations.Email;
 import annotations.Nested;
 import annotations.NotNull;
 import annotations.ValidatedBy;
@@ -34,6 +35,8 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
         addValidatorToChain(new AnnotationValidator<>());
     }
 
+    public void email(){addValidatorToChain(new AnnotationValidator<>());}
+
     public CustomChainValidatorBuilder<T> name(String name) {
         addNameForLastValidator(name);
         return this;
@@ -53,6 +56,8 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
                 notNull();
             } else if (annotationClass == Nested.class) {
                 nested();
+            }else if (annotationClass == Email.class) {
+                email();
             } else {
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<T>> validatorClass = (Class<? extends Validator<T>>) validatedBy.validatorClass();
