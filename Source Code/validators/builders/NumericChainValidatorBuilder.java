@@ -71,30 +71,30 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
-            processAnnotation(annotation, field.getType());
+            processAnnotation(annotation,field.getName() ,field.getType());
         }
     }
 
-    private void processAnnotation(Annotation annotation, Class<?> tClass) {
+    private void processAnnotation(Annotation annotation,String name ,Class<?> annotationClass) {
         try {
-            Class<?> annotationClass = annotation.annotationType();
             if (annotationClass == NotNull.class) {
                 notNull();
             } else if (annotationClass == Min.class) {
                 Min minAnnotation = (Min) annotation;
-                min((T) ClassUtils.parse(minAnnotation.value(),tClass),minAnnotation.included()).withMessage(minAnnotation.message());
+                min((T) ClassUtils.parse(minAnnotation.value(),annotationClass),minAnnotation.included()).withMessage(minAnnotation.message());
             } else if (annotationClass == Max.class) {
                 Max maxAnnotation = (Max) annotation;
-                max((T) ClassUtils.parse(maxAnnotation.value(), tClass), maxAnnotation.included()).withMessage(maxAnnotation.message());
+                max((T) ClassUtils.parse(maxAnnotation.value(), annotationClass), maxAnnotation.included()).withMessage(maxAnnotation.message());
             } else if (annotationClass == Equal.class){
                 Equal equalAnnotation = (Equal) annotation;
-                equal((T) ClassUtils.parse(equalAnnotation.value(),tClass)).withMessage(equalAnnotation.message());
+                equal((T) ClassUtils.parse(equalAnnotation.value(),annotationClass)).withMessage(equalAnnotation.message());
             } else {
                 //Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<T>> validatorClass = (Class<? extends Validator<T>>) validatedBy.validatorClass();
                 validatedBy(validatorClass);
             }
+            name(name);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -69,13 +69,12 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
-            processAnnotation(annotation, field.getName());
+            processAnnotation(annotation, field.getName(), field.getType());
         }
     }
 
-    private void processAnnotation(Annotation annotation, String name) {
+    private void processAnnotation(Annotation annotation, String name, Class<?> annotationClass) {
         try {
-            Class<?> annotationClass = annotation.annotationType();
             if (annotationClass == NotNull.class) {
                 NotNull notNullAnnotation = (NotNull) annotation;
                 notEmpty().withMessage(notNullAnnotation.message());
