@@ -65,7 +65,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     }
 
     public StringChainValidatorBuilder notNull() {
-        addValidatorToChain(new NotNullValidator<>());
+        addNotNullValidator();
         return this;
     }
 
@@ -118,6 +118,9 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
             } else if (annotationClass == Equal.class){
                 Equal equalAnnotation = (Equal) annotation;
                 equal(equalAnnotation.value()).withMessage(equalAnnotation.message());
+            } else if (annotationClass == EqualLength.class){
+                EqualLength equalLengthAnnotation = (EqualLength) annotation;
+                withMessage(equalLengthAnnotation.message());
             }
             else {
                 //Custom annotation check

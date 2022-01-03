@@ -1,7 +1,6 @@
 package validators.builders;
 
-import annotations.Min;
-import annotations.ValidatedBy;
+import annotations.*;
 import util.ClassUtils;
 import util.comparator.Comparator;
 import validators.Validator;
@@ -11,7 +10,7 @@ import validators.builtin.MinValidator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-
+@SuppressWarnings("unchecked")
 public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T> {
     private Comparator<T, T> comparator;
 
@@ -27,12 +26,20 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
         return this;
     }
 
+    public NumericChainValidatorBuilder<T> min(T value) {
+        return min(value,true);
+    }
+
     public NumericChainValidatorBuilder<T> max(T value, boolean included) {
         addValidatorToChain(new MaxValidator<>( comparator, value, included));
         return this;
     }
 
-    public NumericChainValidatorBuilder<T> notNull(boolean exitWhenFailed) {
+    public NumericChainValidatorBuilder<T> max(T value) {
+        return max(value,true);
+    }
+
+    public NumericChainValidatorBuilder<T> notNull() {
         addNotNullValidator();
         return this;
     }
@@ -76,16 +83,19 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
     private void processAnnotation(Annotation annotation, Class<?> tClass) {
         try {
             Class<?> annotationClass = annotation.annotationType();
-
-            if (annotationClass == Min.class) {
+            if (annotationClass == NotNull.class) {
+                notNull();
+            } else if (annotationClass == Min.class) {
                 Min minAnnotation = (Min) annotation;
-                String message = minAnnotation.message();
-                if (message.isEmpty()) {
-                    min((T) ClassUtils.parse(minAnnotation.value(), Integer.class), true);
-                } else {
-
-                }
+                min((T) ClassUtils.parse(minAnnotation.value(),tClass),minAnnotation.included()).withMessage(minAnnotation.message());
+            } else if (annotationClass == Max.class) {
+                Max maxAnnotation = (Max) annotation;
+                max((T) ClassUtils.parse(maxAnnotation.value(), tClass), maxAnnotation.included()).withMessage(maxAnnotation.message());
+            } else if (annotationClass == Equal.class){
+                Equal equalAnnotation = (Equal) annotation;
+                equal((T) ClassUtils.parse(equalAnnotation.value(),tClass)).withMessage(equalAnnotation.message());
             } else {
+                //Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<T>> validatorClass = (Class<? extends Validator<T>>) validatedBy.validatorClass();
                 validatedBy(validatorClass);
