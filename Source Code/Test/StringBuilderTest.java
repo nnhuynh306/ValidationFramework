@@ -1,8 +1,7 @@
 package Test;
 
-import org.junit.Test;
 import validators.builders.StringChainValidatorBuilder;
-
+import org.junit.Test;
 
 public class StringBuilderTest {
     @Test

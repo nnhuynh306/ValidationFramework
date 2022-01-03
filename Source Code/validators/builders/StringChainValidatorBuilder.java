@@ -22,21 +22,11 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     }
 
-    public StringChainValidatorBuilder minLength(int min, boolean included, String message) {
-        MinValidator<String, Integer> minValidator;
-        addValidatorToChain(minValidator = new MinValidator<>(new StringIntComparator(), min, included));
-        if (message != null && !message.isEmpty()) {
-            minValidator.setFailedMessage(message);
-        }
-        return this;
-    }
-
     public StringChainValidatorBuilder minLength(int min, boolean included) {
         MinValidator<String, Integer> minValidator;
         addValidatorToChain(minValidator = new MinValidator<>(new StringIntComparator(), min, included));
         return this;
     }
-
     public StringChainValidatorBuilder minLength(int min) {
         return minLength(min,true);
     }
