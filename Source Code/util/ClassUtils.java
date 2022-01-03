@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Date;
+
 public class ClassUtils {
     public static Object parse(String value, Class<?> clazz) throws ClassCastException, NumberFormatException {
         if (clazz == Integer.class) {
@@ -16,6 +18,8 @@ public class ClassUtils {
             return Byte.parseByte(value);
         } else if (clazz == Boolean.class) {
             return Boolean.parseBoolean(value);
+        } else if (clazz == Date.class){
+            return Date.parse(value);
         }
         throw new ClassCastException("Can't parse " + String.class.getName() + " to " + clazz.getName() );
     }

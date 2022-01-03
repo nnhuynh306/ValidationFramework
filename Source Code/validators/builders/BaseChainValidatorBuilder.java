@@ -6,7 +6,6 @@ import validators.Validator;
 import validators.builtin.NotNullValidator;
 
 import java.lang.reflect.Constructor;
-
 public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuilder<T> {
     private ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
 
