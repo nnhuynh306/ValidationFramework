@@ -65,7 +65,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     }
 
     public StringChainValidatorBuilder notNull() {
-        addValidatorToChain(new NotNullValidator<>());
+        addNotNullValidator();
         return this;
     }
 
@@ -86,21 +86,15 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     }
 
-    public StringChainValidatorBuilder withMessage(String message) {
-        setFailedMessageForLastValidator(message);
-        return this;
-    }
-
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation: field.getAnnotations()) {
-            processAnnotation(annotation, field.getName());
+            processAnnotation(annotation, field.getName(), field.getType());
         }
     }
 
-    private void processAnnotation(Annotation annotation, String name) {
+    private void processAnnotation(Annotation annotation, String name, Class<?> annotationClass) {
         try {
-            Class<?> annotationClass = annotation.annotationType();
             if (annotationClass == NotNull.class) {
                 notNull();
             } else if(annotationClass == NotEmpty.class){
@@ -118,6 +112,9 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
             } else if (annotationClass == Equal.class){
                 Equal equalAnnotation = (Equal) annotation;
                 equal(equalAnnotation.value()).withMessage(equalAnnotation.message());
+            } else if (annotationClass == EqualLength.class){
+                EqualLength equalLengthAnnotation = (EqualLength) annotation;
+                withMessage(equalLengthAnnotation.message());
             }
             else {
                 //Custom annotation check

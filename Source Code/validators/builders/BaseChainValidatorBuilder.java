@@ -6,7 +6,6 @@ import validators.Validator;
 import validators.builtin.NotNullValidator;
 
 import java.lang.reflect.Constructor;
-
 public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuilder<T> {
     private ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
 
@@ -21,6 +20,11 @@ public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuil
 
     protected void addNotNullValidator() {
         addValidatorToChain(new NotNullValidator<T>());
+    }
+
+    public BaseChainValidatorBuilder withMessage(String message) {
+        setFailedMessageForLastValidator(message);
+        return this;
     }
 
     public void addNameForLastValidator(String name) {
