@@ -16,27 +16,27 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
     }
 
     public DateChainValidatorBuilder minDate(Date min) {
-        addValidatorToChain(new MinValidator<>(true,new DateComparator(),min));
+        addValidatorToChain(new MinValidator<>(new DateComparator(),min));
         return this;
     }
 
     public DateChainValidatorBuilder notEmpty() {
-        addValidatorToChain(new NotEmptyValidator<>(true));
+        addValidatorToChain(new NotEmptyValidator<>());
         return this;
     }
 
     public DateChainValidatorBuilder maxDate(Date max, boolean include) {
-        addValidatorToChain(new MinValidator<>(true,new DateComparator(),max,include));
+        addValidatorToChain(new MinValidator<>(new DateComparator(),max,include));
         return this;
     }
 
     public DateChainValidatorBuilder notNull() {
-        addValidatorToChain(new NotNullValidator<>(true));
+        addValidatorToChain(new NotNullValidator<>());
         return this;
     }
 
     public DateChainValidatorBuilder equal(Date value){
-        addValidatorToChain(new EqualValidator<>(true,new DateComparator(),value));
+        addValidatorToChain(new EqualValidator<>(new DateComparator(),value));
         return this;
     }
 

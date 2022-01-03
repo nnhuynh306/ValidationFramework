@@ -17,7 +17,7 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
     }
 
     public CustomChainValidatorBuilder<T> notNull() {
-        addValidatorToChain(new NotNullValidator<>(false));
+        addValidatorToChain(new NotNullValidator<>());
         return this;
     }
 

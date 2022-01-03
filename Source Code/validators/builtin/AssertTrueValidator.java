@@ -1,13 +1,13 @@
 package validators.builtin;
 
 public class AssertTrueValidator<Boolean> extends BuiltInValidator<Boolean> {
-    public AssertTrueValidator(boolean exitWhenFailed) {
-        super(exitWhenFailed);
+    public AssertTrueValidator() {
+        super();
     }
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return "Must be TRUE but FAILED now";
     }
 
     @Override

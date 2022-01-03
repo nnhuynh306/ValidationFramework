@@ -7,14 +7,14 @@ public class  MaxValidator<T, S> extends BuiltInValidator<T> {
     private final S value;
     private boolean included = true;
 
-    public MaxValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value) {
-        super(exitWhenFailed);
+    public MaxValidator(Comparator<T, S> comparator, S value) {
+        super();
         this.comparator = comparator;
         this.value = value;
     }
 
-    public MaxValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value, boolean included) {
-        super(exitWhenFailed);
+    public MaxValidator(Comparator<T, S> comparator, S value, boolean included) {
+        super();
         this.comparator = comparator;
         this.value = value;
         this.included = included;
@@ -22,7 +22,7 @@ public class  MaxValidator<T, S> extends BuiltInValidator<T> {
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return getName() + " max value must be " + value + " (" + (included?"included":"excluded") + ")";
     }
 
     @Override

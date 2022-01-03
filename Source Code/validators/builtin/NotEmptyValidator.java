@@ -1,13 +1,13 @@
 package validators.builtin;
 
 public class NotEmptyValidator<T> extends BuiltInValidator<T> {
-    public NotEmptyValidator(boolean exitWhenFailed) {
-        super(exitWhenFailed);
+    public NotEmptyValidator() {
+        super();
     }
 
     @Override
     protected String createDefaultFailedMessage() {
-        return null;
+        return getName() + " must be not empty";
     }
 
 

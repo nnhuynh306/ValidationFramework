@@ -6,15 +6,15 @@ public class EqualValidator<T, S> extends BuiltInValidator<T> {
     private final Comparator<T, S> comparator;
     private final S value;
 
-    public EqualValidator(boolean exitWhenFailed, Comparator<T, S> comparator, S value) {
-        super(exitWhenFailed);
+    public EqualValidator(Comparator<T, S> comparator, S value) {
+        super();
         this.comparator = comparator;
         this.value = value;
     }
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return getName() + "must equal " + value;
     }
 
     @Override

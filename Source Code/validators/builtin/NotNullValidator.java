@@ -2,13 +2,13 @@ package validators.builtin;
 
 public class NotNullValidator<T> extends BuiltInValidator<T> {
 
-    public NotNullValidator(boolean exitWhenFailed) {
-        super(exitWhenFailed);
+    public NotNullValidator() {
+        super();
     }
 
     @Override
     protected String createDefaultFailedMessage() {
-        return "TEST FAILED";
+        return getName() + " must be not null";
     }
 
     @Override
