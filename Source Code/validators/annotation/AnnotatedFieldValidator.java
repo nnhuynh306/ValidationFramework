@@ -12,16 +12,17 @@ import java.lang.reflect.Field;
 
 /**
  * Basically a validator for annotated field of class T
+ *
  * @param <T>Class T
- * @param <S>T's annotated field type
+ * @param <S>T's   annotated field type
  */
 public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
 
-    private FieldValueParser<T, S>  fieldValueParser;
-    private Field field;
+    private final FieldValueParser<T, S> fieldValueParser;
+    private final Field field;
     private Validator<S> validator;
-    private ChainValidatorBuilder<S> chainValidatorBuilder;
-    private Class<S> sClass;
+    private final ChainValidatorBuilder<S> chainValidatorBuilder;
+    private final Class<S> sClass;
 
     private String name;
 
@@ -39,10 +40,9 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
         String message = "";
         try {
             S s = fieldValueParser.parseValue(field, t, sClass);
+            result = getValidator().validate(s, returnResults);
             if (hasNext()) {
-                result = getValidator().validate(s, returnResults) && nextValidator.validate(t, returnResults);
-            } else {
-                result = getValidator().validate(s, returnResults);
+                result = result && nextValidator.validate(t, returnResults);
             }
             message = name + " is invalid\n";
         } catch (NullPointerException e) {
@@ -51,7 +51,7 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
         } catch (Exception e) {
             e.printStackTrace();
             result = false;
-            message = "Catch Exception " + e.toString();
+            message = "Catch Exception " + e;
         }
 
         setFailedMessage(message);

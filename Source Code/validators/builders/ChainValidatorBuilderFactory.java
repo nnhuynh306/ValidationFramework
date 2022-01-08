@@ -14,15 +14,14 @@ public class ChainValidatorBuilderFactory {
             return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Long.class), clazz);
         } else if (clazz == Short.class || clazz == short.class) {
             return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Short.class), clazz);
-        } else if (clazz ==  Float.class || clazz == float.class) {
+        } else if (clazz == Float.class || clazz == float.class) {
             return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Float.class), clazz);
         } else if (clazz == Double.class || clazz == double.class) {
             return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Double.class), clazz);
         } else if (clazz == Byte.class || clazz == byte.class) {
             return new NumericChainValidatorBuilder<T>(ComparatorFactory.getComparator(Byte.class), clazz);
-        }
-        else {
-            return  null;
+        } else {
+            return null;
         }
     }
 
@@ -30,7 +29,9 @@ public class ChainValidatorBuilderFactory {
         return new StringChainValidatorBuilder();
     }
 
-    public static DateChainValidatorBuilder getDateChainValidatorBuilder(){return new DateChainValidatorBuilder(); }
+    public static DateChainValidatorBuilder getDateChainValidatorBuilder() {
+        return new DateChainValidatorBuilder();
+    }
 
     public static <T> CustomChainValidatorBuilder<T> getCustomChainValidatorBuilder() {
         return new CustomChainValidatorBuilder<T>();
@@ -41,20 +42,18 @@ public class ChainValidatorBuilderFactory {
     }
 
     public static <T> ChainValidatorBuilder<T> getChainValidatorBuilderFor(Class<T> tClass) {
-        ChainValidatorBuilder<T> chainValidatorBuilder;
-
         if (tClass == null) {
-            chainValidatorBuilder = getCustomChainValidatorBuilder();
-        } else if (tClass == String.class) {
-            chainValidatorBuilder = (ChainValidatorBuilder<T>) getStringChainValidatorBuilder();
-        } else {
-            chainValidatorBuilder = getNumericChainValidatorBuilderOf(tClass);
-            if (chainValidatorBuilder == null) {
-                chainValidatorBuilder = getCustomChainValidatorBuilder();
-            }
+            return getCustomChainValidatorBuilder();
+        }
+        if (tClass == String.class) {
+            return (ChainValidatorBuilder<T>) getStringChainValidatorBuilder();
+        }
+
+        ChainValidatorBuilder<T> chainValidatorBuilder = getNumericChainValidatorBuilderOf(tClass);
+
+        if (chainValidatorBuilder == null) {
+            return getCustomChainValidatorBuilder();
         }
         return chainValidatorBuilder;
     }
-
-
 }

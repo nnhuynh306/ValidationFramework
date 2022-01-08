@@ -28,6 +28,7 @@ public class BooleanChainValidatorBuilder extends BaseChainValidatorBuilder<Bool
         addNameForLastValidator(name);
         return this;
     }
+
     public <V extends Validator<Boolean>> BaseChainValidatorBuilder<Boolean> validatedBy(Class<V> validatorClass) {
         validatedBy(validatorClass, null);
         return this;
@@ -37,20 +38,22 @@ public class BooleanChainValidatorBuilder extends BaseChainValidatorBuilder<Bool
         addCustomValidator(validatorClass, arguments);
         return this;
     }
+
     @Override
     public void processAnnotatedField(Field field) {
-        for (Annotation annotation: field.getAnnotations()) {
-            processAnnotation(annotation,field.getName() ,field.getType());
+        for (Annotation annotation : field.getAnnotations()) {
+            processAnnotation(annotation, field.getName(), field.getType());
         }
     }
-    private void processAnnotation(Annotation annotation,String name ,Class<?> annotationClass) {
+
+    private void processAnnotation(Annotation annotation, String name, Class<?> annotationClass) {
         try {
             if (annotationClass == AssertTrue.class) {
                 assetTrue().withMessage(((AssertTrue) annotation).message());
-            } else if (annotationClass == AssertFalse.class){
+            } else if (annotationClass == AssertFalse.class) {
                 assetFalse().withMessage(((AssertFalse) annotation).message());
-            }else {
-                //Custom annotation check
+            } else {
+                // Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<Boolean>> validatorClass = (Class<? extends Validator<Boolean>>) validatedBy.validatorClass();
                 validatedBy(validatorClass);
