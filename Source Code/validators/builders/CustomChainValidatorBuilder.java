@@ -35,7 +35,9 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
         addValidatorToChain(new AnnotationValidator<>());
     }
 
-    public void email(){addValidatorToChain(new AnnotationValidator<>());}
+    public void email() {
+        addValidatorToChain(new AnnotationValidator<>());
+    }
 
     public CustomChainValidatorBuilder<T> name(String name) {
         addNameForLastValidator(name);
@@ -44,7 +46,7 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
 
     @Override
     public void processAnnotatedField(Field field) {
-        for (Annotation annotation: field.getAnnotations()) {
+        for (Annotation annotation : field.getAnnotations()) {
             processAnnotation(annotation);
         }
     }
@@ -56,7 +58,7 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
                 notNull();
             } else if (annotationClass == Nested.class) {
                 nested();
-            }else if (annotationClass == Email.class) {
+            } else if (annotationClass == Email.class) {
                 email();
             } else {
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);

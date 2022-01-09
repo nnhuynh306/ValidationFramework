@@ -13,7 +13,7 @@ public class RegexValidator<String> extends BuiltInValidator<String> {
 
     @Override
     protected java.lang.String createDefaultFailedMessage() {
-        return getName()+ " must be match with regex" + regex;
+        return getName() + " must be match with regex" + regex;
     }
 
     @Override

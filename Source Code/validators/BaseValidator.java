@@ -39,7 +39,7 @@ public abstract class BaseValidator<T> implements Validator<T> {
     protected void addResult(boolean isValid, ValidationResults results) {
         if (results != null) {
             results.add(ValidationResult.create(isValid,
-                    getName(), isValid?"": failedMessage));
+                    getName(), isValid ? "" : failedMessage));
         }
     }
 }

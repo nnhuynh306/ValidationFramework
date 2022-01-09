@@ -27,8 +27,9 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
         addValidatorToChain(minValidator = new MinValidator<>(new StringIntComparator(), min, included));
         return this;
     }
+
     public StringChainValidatorBuilder minLength(int min) {
-        return minLength(min,true);
+        return minLength(min, true);
     }
 
     public StringChainValidatorBuilder notEmpty() {
@@ -60,7 +61,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     public StringChainValidatorBuilder maxLength(int max, boolean include) {
         MaxValidator<String, Integer> maxValidator;
-        addValidatorToChain(maxValidator = new MaxValidator<>( new StringIntComparator(), max, include));
+        addValidatorToChain(maxValidator = new MaxValidator<>(new StringIntComparator(), max, include));
         return this;
     }
 
@@ -69,8 +70,8 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
         return this;
     }
 
-    public StringChainValidatorBuilder equal(String value){
-        addValidatorToChain(new EqualValidator<>( new StringComparator(), value));
+    public StringChainValidatorBuilder equal(String value) {
+        addValidatorToChain(new EqualValidator<>(new StringComparator(), value));
         return this;
     }
 
@@ -88,7 +89,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     @Override
     public void processAnnotatedField(Field field) {
-        for (Annotation annotation: field.getAnnotations()) {
+        for (Annotation annotation : field.getAnnotations()) {
             processAnnotation(annotation, field.getName(), field.getType());
         }
     }
@@ -97,7 +98,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
         try {
             if (annotationClass == NotNull.class) {
                 notNull();
-            } else if(annotationClass == NotEmpty.class){
+            } else if (annotationClass == NotEmpty.class) {
                 NotEmpty notEmptyAnnotation = (NotEmpty) annotation;
                 notEmpty().withMessage(notEmptyAnnotation.message());
             } else if (annotationClass == Min.class) {
@@ -106,17 +107,16 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
             } else if (annotationClass == Max.class) {
                 Max maxAnnotation = (Max) annotation;
                 maxLength((Integer) ClassUtils.parse(maxAnnotation.value(), Integer.class), maxAnnotation.included()).withMessage(maxAnnotation.message());
-            } else if (annotationClass == Regex.class){
+            } else if (annotationClass == Regex.class) {
                 Regex regexAnnotation = (Regex) annotation;
                 regex(regexAnnotation.value()).withMessage(regexAnnotation.message());
-            } else if (annotationClass == Equal.class){
+            } else if (annotationClass == Equal.class) {
                 Equal equalAnnotation = (Equal) annotation;
                 equal(equalAnnotation.value()).withMessage(equalAnnotation.message());
-            } else if (annotationClass == EqualLength.class){
+            } else if (annotationClass == EqualLength.class) {
                 EqualLength equalLengthAnnotation = (EqualLength) annotation;
                 withMessage(equalLengthAnnotation.message());
-            }
-            else {
+            } else {
                 //Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<String>> validatorClass = (Class<? extends Validator<String>>) validatedBy.validatorClass();

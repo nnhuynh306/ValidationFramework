@@ -8,7 +8,7 @@ import validators.result.ValidationResults;
 import java.util.Date;
 import java.util.function.Function;
 
-public abstract class AbstractValidator<T> extends BaseValidator<T>  {
+public abstract class AbstractValidator<T> extends BaseValidator<T> {
 
     protected ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
 
@@ -22,8 +22,7 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
         boolean result;
         if (firstValidator != null) {
             result = chainValidatorLinker.getFirstValidator().validate(t, returnResults);
-        }
-        else {
+        } else {
             result = true;
         }
 
@@ -39,9 +38,9 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
         return stringValidatorBuilder;
     }
 
-    public final DateChainValidatorBuilder AddDateRuleFor(Function<T, Date> getDateFunction){
+    public final DateChainValidatorBuilder AddDateRuleFor(Function<T, Date> getDateFunction) {
         DateChainValidatorBuilder dateValidatorBuilder = ChainValidatorBuilderFactory.getDateChainValidatorBuilder();
-        chainValidatorLinker.add(new Rule<>(dateValidatorBuilder,getDateFunction));
+        chainValidatorLinker.add(new Rule<>(dateValidatorBuilder, getDateFunction));
         return dateValidatorBuilder;
     }
 
@@ -51,8 +50,8 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
         return customValidatorBuilder;
     }
 
-    public final<S> NumericChainValidatorBuilder<S> AddNumericRuleFor(Function<T, S> getFunction, Class<S> sClass) throws IllegalArgumentException {
-        NumericChainValidatorBuilder<S> numericValidatorBuilder =  ChainValidatorBuilderFactory.getNumericChainValidatorBuilderOf(sClass);
+    public final <S> NumericChainValidatorBuilder<S> AddNumericRuleFor(Function<T, S> getFunction, Class<S> sClass) throws IllegalArgumentException {
+        NumericChainValidatorBuilder<S> numericValidatorBuilder = ChainValidatorBuilderFactory.getNumericChainValidatorBuilderOf(sClass);
 
         if (numericValidatorBuilder == null) {
             throw new IllegalArgumentException(sClass.getName() + " is not a supported numeric type");
@@ -63,7 +62,7 @@ public abstract class AbstractValidator<T> extends BaseValidator<T>  {
     }
 
     public final BooleanChainValidatorBuilder AddBooleanRuleFor(Function<T, Boolean> getFunction) {
-        BooleanChainValidatorBuilder booleanValidatorBuilder =  ChainValidatorBuilderFactory.getBooleanChainValidatorBuilder();
+        BooleanChainValidatorBuilder booleanValidatorBuilder = ChainValidatorBuilderFactory.getBooleanChainValidatorBuilder();
         chainValidatorLinker.add(new Rule<>(booleanValidatorBuilder, getFunction));
         return booleanValidatorBuilder;
     }
