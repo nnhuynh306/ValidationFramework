@@ -74,4 +74,8 @@ public class ValidationResults {
         }
         return null;
     }
+
+    public void clear(){
+        validationResults.clear();
+    }
 }
