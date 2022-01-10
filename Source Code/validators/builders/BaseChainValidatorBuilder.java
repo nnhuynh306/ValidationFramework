@@ -45,6 +45,12 @@ public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuil
         }
     }
 
+    protected void addCustomValidator(Validator<T> validator) {
+        if (validator != null) {
+            chainValidatorLinker.add(validator);
+        }
+    }
+
     protected <V extends Validator<T>> void addCustomValidator(Class<V> validatorClass, Object[] arguments) {
         try {
             Constructor<V> validatorClassConstructor;

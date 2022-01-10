@@ -44,6 +44,11 @@ public class CustomChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T>
         return this;
     }
 
+    public CustomChainValidatorBuilder<T> validatedBy(Validator<T> validator) {
+        addCustomValidator(validator);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation : field.getAnnotations()) {

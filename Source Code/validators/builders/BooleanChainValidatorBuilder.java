@@ -29,13 +29,18 @@ public class BooleanChainValidatorBuilder extends BaseChainValidatorBuilder<Bool
         return this;
     }
 
-    public <V extends Validator<Boolean>> BaseChainValidatorBuilder<Boolean> validatedBy(Class<V> validatorClass) {
+    public <V extends Validator<Boolean>> BooleanChainValidatorBuilder validatedBy(Class<V> validatorClass) {
         validatedBy(validatorClass, null);
         return this;
     }
 
-    public <V extends Validator<Boolean>> BaseChainValidatorBuilder<Boolean> validatedBy(Class<V> validatorClass, Object[] arguments) {
+    public <V extends Validator<Boolean>> BooleanChainValidatorBuilder validatedBy(Class<V> validatorClass, Object[] arguments) {
         addCustomValidator(validatorClass, arguments);
+        return this;
+    }
+
+    public BooleanChainValidatorBuilder validatedBy(Validator<Boolean> validator) {
+        addCustomValidator(validator);
         return this;
     }
 
