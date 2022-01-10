@@ -87,6 +87,11 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
 
     }
 
+    public StringChainValidatorBuilder validatedBy(Validator<String> validator) {
+        addCustomValidator(validator);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation : field.getAnnotations()) {

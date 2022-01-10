@@ -49,6 +49,11 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
         return this;
     }
 
+    public NumericChainValidatorBuilder<T> validatedBy(Validator<T> validator) {
+        addCustomValidator(validator);
+        return this;
+    }
+
     public Class<T> getTClass() {
         return TClass;
     }

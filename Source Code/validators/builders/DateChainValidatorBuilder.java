@@ -66,6 +66,11 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
         return this;
     }
 
+    public DateChainValidatorBuilder validatedBy(Validator<Date> validator) {
+        addCustomValidator(validator);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation : field.getAnnotations()) {
