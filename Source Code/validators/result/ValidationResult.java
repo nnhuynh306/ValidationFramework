@@ -1,19 +1,22 @@
 package validators.result;
 
 public class ValidationResult {
-    private RESULT result;
-    private String name;
-    private String message;
+    private final RESULT result;
+    private final String name;
+    private final String message;
 
     private ValidationResult(RESULT result, String name, String message) {
         this.result = result;
-        this.name = name == null?"": name;
+        this.name = name == null ? "" : name;
         this.message = message;
     }
 
-    public enum RESULT {
-        OK,
-        FAILED,
+    public static ValidationResult create(boolean result, String name, String message) {
+        return new ValidationResult(result ? RESULT.OK : RESULT.FAILED, name, message);
+    }
+
+    public static ValidationResult create(RESULT result, String name, String message) {
+        return new ValidationResult(result, name, message);
     }
 
     public boolean hasFailed() {
@@ -32,11 +35,8 @@ public class ValidationResult {
         return message;
     }
 
-    public static ValidationResult create(boolean result, String name, String message) {
-        return new ValidationResult(result? RESULT.OK: RESULT.FAILED, name, message);
-    }
-
-    public static ValidationResult create(RESULT result, String name, String message) {
-        return new ValidationResult(result, name, message);
+    public enum RESULT {
+        OK,
+        FAILED,
     }
 }

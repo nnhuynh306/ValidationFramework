@@ -10,11 +10,11 @@ import validators.builtin.MinValidator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+
 @SuppressWarnings("unchecked")
 public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T> {
-    private Comparator<T, T> comparator;
-
     private final Class<T> TClass;
+    private final Comparator<T, T> comparator;
 
     protected NumericChainValidatorBuilder(Comparator<T, T> comparator, Class<T> TClass) {
         this.comparator = comparator;
@@ -22,21 +22,21 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
     }
 
     public NumericChainValidatorBuilder<T> min(T value, boolean included) {
-        addValidatorToChain(new MinValidator<T, T>( comparator, value, included));
+        addValidatorToChain(new MinValidator<T, T>(comparator, value, included));
         return this;
     }
 
     public NumericChainValidatorBuilder<T> min(T value) {
-        return min(value,true);
+        return min(value, true);
     }
 
     public NumericChainValidatorBuilder<T> max(T value, boolean included) {
-        addValidatorToChain(new MaxValidator<>( comparator, value, included));
+        addValidatorToChain(new MaxValidator<>(comparator, value, included));
         return this;
     }
 
     public NumericChainValidatorBuilder<T> max(T value) {
-        return max(value,true);
+        return max(value, true);
     }
 
     public NumericChainValidatorBuilder<T> notNull() {
@@ -44,8 +44,8 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
         return this;
     }
 
-    public NumericChainValidatorBuilder<T> equal(T value){
-        addValidatorToChain(new EqualValidator<T, T>( comparator, value));
+    public NumericChainValidatorBuilder<T> equal(T value) {
+        addValidatorToChain(new EqualValidator<T, T>(comparator, value));
         return this;
     }
 
@@ -70,24 +70,24 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
 
     @Override
     public void processAnnotatedField(Field field) {
-        for (Annotation annotation: field.getAnnotations()) {
-            processAnnotation(annotation,field.getName() ,field.getType());
+        for (Annotation annotation : field.getAnnotations()) {
+            processAnnotation(annotation, field.getName(), field.getType());
         }
     }
 
-    private void processAnnotation(Annotation annotation,String name ,Class<?> annotationClass) {
+    private void processAnnotation(Annotation annotation, String name, Class<?> annotationClass) {
         try {
             if (annotationClass == NotNull.class) {
                 notNull();
             } else if (annotationClass == Min.class) {
                 Min minAnnotation = (Min) annotation;
-                min((T) ClassUtils.parse(minAnnotation.value(),annotationClass),minAnnotation.included()).withMessage(minAnnotation.message());
+                min((T) ClassUtils.parse(minAnnotation.value(), annotationClass), minAnnotation.included()).withMessage(minAnnotation.message());
             } else if (annotationClass == Max.class) {
                 Max maxAnnotation = (Max) annotation;
                 max((T) ClassUtils.parse(maxAnnotation.value(), annotationClass), maxAnnotation.included()).withMessage(maxAnnotation.message());
-            } else if (annotationClass == Equal.class){
+            } else if (annotationClass == Equal.class) {
                 Equal equalAnnotation = (Equal) annotation;
-                equal((T) ClassUtils.parse(equalAnnotation.value(),annotationClass)).withMessage(equalAnnotation.message());
+                equal((T) ClassUtils.parse(equalAnnotation.value(), annotationClass)).withMessage(equalAnnotation.message());
             } else {
                 //Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);

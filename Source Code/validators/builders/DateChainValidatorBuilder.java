@@ -19,21 +19,21 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
     }
 
     public DateChainValidatorBuilder minDate(Date min, boolean include) {
-        addValidatorToChain(new MinValidator<>(new DateComparator(),min,include));
+        addValidatorToChain(new MinValidator<>(new DateComparator(), min, include));
         return this;
     }
 
     public DateChainValidatorBuilder minDate(Date min) {
-        return minDate(min,true);
+        return minDate(min, true);
     }
 
     public DateChainValidatorBuilder maxDate(Date max, boolean include) {
-        addValidatorToChain(new MinValidator<>(new DateComparator(),max,include));
+        addValidatorToChain(new MinValidator<>(new DateComparator(), max, include));
         return this;
     }
 
     public DateChainValidatorBuilder maxDate(Date max) {
-        return minDate(max,true);
+        return minDate(max, true);
     }
 
     public DateChainValidatorBuilder notEmpty() {
@@ -46,8 +46,8 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
         return this;
     }
 
-    public DateChainValidatorBuilder equal(Date value){
-        addValidatorToChain(new EqualValidator<>(new DateComparator(),value));
+    public DateChainValidatorBuilder equal(Date value) {
+        addValidatorToChain(new EqualValidator<>(new DateComparator(), value));
         return this;
     }
 
@@ -68,7 +68,7 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
 
     @Override
     public void processAnnotatedField(Field field) {
-        for (Annotation annotation: field.getAnnotations()) {
+        for (Annotation annotation : field.getAnnotations()) {
             processAnnotation(annotation, field.getName(), field.getType());
         }
     }
@@ -78,20 +78,19 @@ public class DateChainValidatorBuilder extends BaseChainValidatorBuilder<Date> {
             if (annotationClass == NotNull.class) {
                 NotNull notNullAnnotation = (NotNull) annotation;
                 notEmpty().withMessage(notNullAnnotation.message());
-            } else if(annotationClass == NotEmpty.class){
+            } else if (annotationClass == NotEmpty.class) {
                 NotEmpty notEmptyAnnotation = (NotEmpty) annotation;
                 notEmpty().withMessage(notEmptyAnnotation.message());
             } else if (annotationClass == Min.class) {
                 Min minAnnotation = (Min) annotation;
-                minDate((Date) ClassUtils.parse(minAnnotation.value(),Date.class), minAnnotation.included()).withMessage(minAnnotation.message());
+                minDate((Date) ClassUtils.parse(minAnnotation.value(), Date.class), minAnnotation.included()).withMessage(minAnnotation.message());
             } else if (annotationClass == Max.class) {
                 Max maxAnnotation = (Max) annotation;
-                maxDate((Date) ClassUtils.parse(maxAnnotation.value(),Date.class), maxAnnotation.included()).withMessage(maxAnnotation.message());
-            } else if (annotationClass == Equal.class){
+                maxDate((Date) ClassUtils.parse(maxAnnotation.value(), Date.class), maxAnnotation.included()).withMessage(maxAnnotation.message());
+            } else if (annotationClass == Equal.class) {
                 Equal equalAnnotation = (Equal) annotation;
-                equal((Date) ClassUtils.parse(equalAnnotation.value(),Date.class)).withMessage(equalAnnotation.message());
-            }
-            else {
+                equal((Date) ClassUtils.parse(equalAnnotation.value(), Date.class)).withMessage(equalAnnotation.message());
+            } else {
                 //Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
                 Class<? extends Validator<Date>> validatorClass = (Class<? extends Validator<Date>>) validatedBy.validatorClass();

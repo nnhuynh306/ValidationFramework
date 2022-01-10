@@ -6,8 +6,10 @@ import validators.Validator;
 import validators.builtin.NotNullValidator;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
+
 public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuilder<T> {
-    private ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
+    private final ChainValidatorLinker<T> chainValidatorLinker = new ChainValidatorLinker<>();
 
     protected void addValidatorToChain(Validator<T> validator) {
         chainValidatorLinker.add(validator);
@@ -44,25 +46,22 @@ public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuil
     }
 
     protected <V extends Validator<T>> void addCustomValidator(Class<V> validatorClass, Object[] arguments) {
-       try {
-           Constructor<V> validatorClassConstructor;
-           Validator<T> validator;
-           if (arguments != null && arguments.length > 0) {
-               Class<?>[] argClasses = new Class[arguments.length];
+        try {
+            Constructor<V> validatorClassConstructor;
+            Validator<T> validator;
+            if (arguments != null && arguments.length > 0) {
+                Class<?>[] argClasses = new Class[arguments.length];
+                Arrays.setAll(argClasses, i -> arguments[i].getClass());
 
-               for (int i = 0; i < argClasses.length; i++) {
-                   argClasses[i] = arguments[i].getClass();
-               }
-
-               validatorClassConstructor = validatorClass.getConstructor(argClasses);
-               validator = validatorClassConstructor.newInstance(arguments);
-           } else {
-               validatorClassConstructor = validatorClass.getConstructor();
-               validator = validatorClassConstructor.newInstance();
-           }
-           addValidatorToChain(validator);
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+                validatorClassConstructor = validatorClass.getConstructor(argClasses);
+                validator = validatorClassConstructor.newInstance(arguments);
+            } else {
+                validatorClassConstructor = validatorClass.getConstructor();
+                validator = validatorClassConstructor.newInstance();
+            }
+            addValidatorToChain(validator);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

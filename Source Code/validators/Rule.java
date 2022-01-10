@@ -21,7 +21,7 @@ public class Rule<T, S> extends BaseValidator<T> {
         this.getSValueFunction = getSValueFunction;
     }
 
-    public boolean validate(T t,ValidationResults returnResults) {
+    public boolean validate(T t, ValidationResults returnResults) {
         boolean result;
         if (hasNext()) {
             result = getValidator().validate(getSValueFunction.apply(t), returnResults) && nextValidator.validate(t, returnResults);

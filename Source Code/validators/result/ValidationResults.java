@@ -7,7 +7,6 @@ public class ValidationResults {
     ArrayList<ValidationResult> validationResults = new ArrayList<>();
 
     public ValidationResults() {
-
     }
 
     public void add(ValidationResult result) {
@@ -21,7 +20,7 @@ public class ValidationResults {
     }
 
     public boolean remove(String name, boolean ignoreCase) {
-        for(int i = 0; i < validationResults.size(); i++) {
+        for (int i = 0; i < validationResults.size(); i++) {
             ValidationResult result = validationResults.get(i);
             if (ignoreCase) {
                 if (result.getName().equalsIgnoreCase(name)) {
@@ -37,7 +36,7 @@ public class ValidationResults {
     }
 
     public void removeAll(String name, boolean ignoreCase) {
-        for(int i = 0; i < validationResults.size(); i++) {
+        for (int i = 0; i < validationResults.size(); i++) {
             ValidationResult result = validationResults.get(i);
             if (ignoreCase) {
                 if (result.getName().equalsIgnoreCase(name)) {
@@ -54,7 +53,7 @@ public class ValidationResults {
     public ArrayList<ValidationResult> getFailedResults() {
         ArrayList<ValidationResult> failedResults = new ArrayList<>();
 
-        for(ValidationResult result: validationResults) {
+        for (ValidationResult result : validationResults) {
             if (result.hasFailed()) {
                 failedResults.add(result);
             }
@@ -68,8 +67,8 @@ public class ValidationResults {
     }
 
     public ValidationResult get(String name, boolean ignoreCase) {
-        for(ValidationResult result: validationResults) {
-            if (ignoreCase? result.getName().equalsIgnoreCase(name): result.getName().equals(name)) {
+        for (ValidationResult result : validationResults) {
+            if (ignoreCase ? result.getName().equalsIgnoreCase(name) : result.getName().equals(name)) {
                 return result;
             }
         }
