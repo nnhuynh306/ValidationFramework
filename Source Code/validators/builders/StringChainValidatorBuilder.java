@@ -92,6 +92,10 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
         return this;
     }
 
+    public StringChainValidatorBuilder email() {
+        return regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$");
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation : field.getAnnotations()) {
@@ -126,6 +130,9 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
             } else if (annotationClass == EqualLength.class) {
                 EqualLength equalLengthAnnotation = (EqualLength) annotation;
                 withMessage(equalLengthAnnotation.message());
+            } else if (annotationClass == Email.class) {
+                Email emailAnnotation = (Email) annotation;
+                withMessage(emailAnnotation.message());
             } else {
                 //Custom annotation check
                 ValidatedBy validatedBy = annotationClass.getAnnotation(ValidatedBy.class);
