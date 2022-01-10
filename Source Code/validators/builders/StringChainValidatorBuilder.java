@@ -99,6 +99,11 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
         }
     }
 
+    public StringChainValidatorBuilder withMessage(String message) {
+        setFailedMessageForLastValidator(message);
+        return this;
+    }
+
     private void processAnnotation(Annotation annotation, String name, Class<?> annotationClass) {
         try {
             if (annotationClass == NotNull.class) {

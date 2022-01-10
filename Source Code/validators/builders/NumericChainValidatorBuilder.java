@@ -73,6 +73,11 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
         return this;
     }
 
+    public NumericChainValidatorBuilder<T> withMessage(String message) {
+        setFailedMessageForLastValidator(message);
+        return this;
+    }
+
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation : field.getAnnotations()) {

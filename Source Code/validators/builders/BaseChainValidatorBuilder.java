@@ -24,11 +24,6 @@ public abstract class BaseChainValidatorBuilder<T> implements ChainValidatorBuil
         addValidatorToChain(new NotNullValidator<T>());
     }
 
-    public BaseChainValidatorBuilder withMessage(String message) {
-        setFailedMessageForLastValidator(message);
-        return this;
-    }
-
     public void addNameForLastValidator(String name) {
         try {
             ((BaseValidator) chainValidatorLinker.getLastValidator()).setName(name);
