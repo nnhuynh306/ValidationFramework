@@ -99,7 +99,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation : field.getAnnotations()) {
-            processAnnotation(annotation, field.getName(), field.getType());
+            processAnnotation(annotation, field.getName(), annotation.annotationType());
         }
     }
 

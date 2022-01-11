@@ -81,7 +81,7 @@ public class NumericChainValidatorBuilder<T> extends BaseChainValidatorBuilder<T
     @Override
     public void processAnnotatedField(Field field) {
         for (Annotation annotation : field.getAnnotations()) {
-            processAnnotation(annotation, field.getName(), field.getType());
+            processAnnotation(annotation, field.getName(), annotation.annotationType());
         }
     }
 
