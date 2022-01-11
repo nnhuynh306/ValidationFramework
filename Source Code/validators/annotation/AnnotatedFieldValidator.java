@@ -24,8 +24,6 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
     private final ChainValidatorBuilder<S> chainValidatorBuilder;
     private final Class<S> sClass;
 
-    private String name;
-
     public AnnotatedFieldValidator(Field field, Class<S> sClass) {
         this.fieldValueParser = new FieldValueParserImpl<>();
         this.field = field;
@@ -37,25 +35,23 @@ public class AnnotatedFieldValidator<T, S> extends BaseValidator<T> {
     @Override
     public boolean validate(T t, ValidationResults returnResults) {
         boolean result;
-        String message = "";
         try {
             S s = fieldValueParser.parseValue(field, t, sClass);
             result = getValidator().validate(s, returnResults);
             if (hasNext()) {
                 result = result && nextValidator.validate(t, returnResults);
             }
-            message = name + " is invalid\n";
         } catch (NullPointerException e) {
+            if (hasNext()) {
+                result = nextValidator.validate(t, returnResults);
+            } else {
+                result = true;
+            }
             e.printStackTrace();
-            result = true;
         } catch (Exception e) {
             e.printStackTrace();
-            result = false;
-            message = "Catch Exception " + e;
+            result = true;
         }
-
-        setFailedMessage(message);
-        addResult(result, returnResults);
 
         return result;
     }

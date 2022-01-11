@@ -22,16 +22,31 @@ public class Rule<T, S> extends BaseValidator<T> {
     }
 
     public boolean validate(T t, ValidationResults returnResults) {
-        boolean result;
-        if (hasNext()) {
-            result = getValidator().validate(getSValueFunction.apply(t), returnResults) && nextValidator.validate(t, returnResults);
-        } else {
-            result = getValidator().validate(getSValueFunction.apply(t), returnResults);
-        }
+       try {
+           boolean result;
+           if (hasNext()) {
+               result = getValidator().validate(getSValueFunction.apply(t), returnResults) && nextValidator.validate(t, returnResults);
+           } else {
+               result = getValidator().validate(getSValueFunction.apply(t), returnResults);
+           }
 
-        addResult(result, returnResults);
+           addResult(result, returnResults);
 
-        return result;
+           return result;
+       } catch (Exception e) {
+
+           boolean result;
+
+           if (hasNext()) {
+               result = nextValidator.validate(t, returnResults);
+           } else {
+               result = true;
+           }
+
+           addResult(result, returnResults);
+           e.printStackTrace();
+           return false;
+       }
     }
 
     public Validator<S> getValidator() {

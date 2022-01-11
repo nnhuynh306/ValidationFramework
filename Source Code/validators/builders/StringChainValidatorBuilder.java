@@ -132,6 +132,7 @@ public class StringChainValidatorBuilder extends BaseChainValidatorBuilder<Strin
                 withMessage(equalLengthAnnotation.message());
             } else if (annotationClass == Email.class) {
                 Email emailAnnotation = (Email) annotation;
+                email();
                 withMessage(emailAnnotation.message());
             } else {
                 //Custom annotation check
